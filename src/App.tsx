@@ -1,5 +1,11 @@
+import Employees from "./features/employee/Employees";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Employees />
+    </>
+  );
 }
 
 export default App;
