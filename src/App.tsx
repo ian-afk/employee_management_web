@@ -1,10 +1,10 @@
-import { useState } from "react";
-import Login from "./features/auth/Login";
+import Employees from "./features/employee/Employees";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
   return (
-    <>{isLogin ? <>YOU ARE NOW LOGIN </> : <Login setIsLogin={setIsLogin} />}</>
+    <>
+      <Employees />
+    </>
   );
 }
 
