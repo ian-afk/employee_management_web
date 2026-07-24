@@ -1,51 +1,36 @@
-export default function EmployeeTable({ employee }) {
+import EmployeeTableRow from "./EmployeeTableRow";
+
+type EmployeeTableProp = {
+  employee: Employee[] | [];
+};
+type Employee = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  empId?: string;
+  department: string;
+  job_title: string;
+  teamLeadId: string | null;
+  createdAt: string;
+  status: string;
+};
+export default function EmployeeTable({ employee }: EmployeeTableProp) {
   return (
     <table>
       <thead>
-        <th>
-          <tr>Employee</tr>
-        </th>
-        <th>
-          <tr>Employee ID</tr>
-        </th>
-        <th>
-          <tr>Department</tr>
-        </th>
-        <th>
-          <tr>Job title</tr>
-        </th>
-        <th>
-          <tr>Team Leader</tr>
-        </th>
-        <th>
-          <tr>Hire Date</tr>
-        </th>
-        <th>
-          <tr>Status</tr>
-        </th>
-        <th>
-          <tr>Action</tr>
-        </th>
+        <tr>
+          <th>Employee</th>
+          <th>Employee ID</th>
+          <th>Department</th>
+          <th>Job title</th>
+          <th>Team Leader</th>
+          <th>Hire Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
       </thead>
       <tbody>
-        {employee.map((emp) => (
-          <tr key={emp.id}>
-            <td>
-              {emp.firstName} {emp.lastName}
-            </td>
-            <td>{emp.id}</td>
-            <td>{emp.department}</td>
-            <td>{emp.job_title}</td>
-            <td>{emp.teamLeadId}</td>
-            <td>{emp.createdAt}</td>
-            <td>{emp.status}</td>
-            <td>
-              <button>VIEW</button>
-              <button>Edit</button>
-              <button>...</button>
-            </td>
-          </tr>
-        ))}
+        <EmployeeTableRow employee={employee} />
       </tbody>
     </table>
   );
