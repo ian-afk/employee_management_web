@@ -1,5 +1,6 @@
 type EmployeeTableRowProp = {
   employee: Employee[] | [];
+  setEmpId: React.Dispatch<React.SetStateAction<string>>;
 };
 type Employee = {
   id: string;
@@ -13,7 +14,13 @@ type Employee = {
   status: string;
 };
 
-export default function EmployeeTableRow({ employee }: EmployeeTableRowProp) {
+export default function EmployeeTableRow({
+  employee,
+  setEmpId,
+}: EmployeeTableRowProp) {
+  const handleViewEmpDetails = (id: string) => {
+    setEmpId(id);
+  };
   return (
     <>
       {employee?.length > 0 ? (
@@ -29,7 +36,7 @@ export default function EmployeeTableRow({ employee }: EmployeeTableRowProp) {
             <td>{emp.createdAt}</td>
             <td>{emp.status}</td>
             <td>
-              <button>VIEW</button>
+              <button onClick={() => handleViewEmpDetails(emp.id)}>VIEW</button>
               <button>Edit</button>
               <button>...</button>
             </td>
