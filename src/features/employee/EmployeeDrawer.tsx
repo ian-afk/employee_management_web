@@ -47,6 +47,7 @@ export default function EmployeeDrawer({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          signal: controller.signal,
         });
 
         if (!res.ok) throw new Error("status failed employee drawer");
