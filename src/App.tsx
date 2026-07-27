@@ -1,5 +1,5 @@
 import Employees from "./features/employee/Employees";
-import { Providers } from "./providers/Provider";
+import { Providers } from "./app/providers/Provider";
 
 function App() {
   return (
