@@ -40,6 +40,7 @@ function EmployeeTable({ setEmpId, token }: EmployeeTableProp) {
 
     if (Number.isFinite(newLimit) && newLimit > 0) {
       setLimit(newLimit);
+      setPage(1);
     }
   }, 500);
   const handleChangeLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,18 +103,20 @@ function EmployeeTable({ setEmpId, token }: EmployeeTableProp) {
             name="limit"
             onChange={handleChangeLimit}
           />
-        </div>{" "}
-        <div>
-          <label htmlFor="limit">Page</label>
-          {Array.from(
-            { length: employees?.pagination.totalPages ?? 0 },
-            (_, index) => (
-              <button key={index} onClick={() => setPage(index + 1)}>
-                {index + 1}
-              </button>
-            ),
-          )}
         </div>
+        {employees?.pagination?.totalPages && (
+          <div>
+            <label htmlFor="limit">Page</label>
+            {Array.from(
+              { length: employees?.pagination?.totalPages ?? 0 },
+              (_, index) => (
+                <button key={index} onClick={() => setPage(index + 1)}>
+                  {index + 1}
+                </button>
+              ),
+            )}
+          </div>
+        )}
       </div>
     </>
   );
