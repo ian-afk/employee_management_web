@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type EmployeeTableRowProp = {
   employee: Employee[] | [];
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
@@ -14,39 +16,29 @@ type Employee = {
   status: string;
 };
 
-export default function EmployeeTableRow({
-  employee,
-  setEmpId,
-}: EmployeeTableRowProp) {
-  const handleViewEmpDetails = (id: string) => {
-    setEmpId(id);
-  };
+function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
   return (
     <>
-      {employee?.length > 0 ? (
-        employee.map((emp) => (
-          <tr key={emp.id}>
-            <td>
-              {emp.firstName} {emp.lastName}
-            </td>
-            <td>{emp.id}</td>
-            <td>{emp.department}</td>
-            <td>{emp.job_title}</td>
-            <td>{emp.teamLeadId}</td>
-            <td>{emp.createdAt}</td>
-            <td>{emp.status}</td>
-            <td>
-              <button onClick={() => handleViewEmpDetails(emp.id)}>VIEW</button>
-              <button>Edit</button>
-              <button>...</button>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td>No record found</td>
+      {employee.map((emp) => (
+        <tr key={emp.id}>
+          <td>
+            {emp.firstName} {emp.lastName}
+          </td>
+          <td>{emp.id}</td>
+          <td>{emp.department}</td>
+          <td>{emp.job_title}</td>
+          <td>{emp.teamLeadId}</td>
+          <td>{emp.createdAt}</td>
+          <td>{emp.status}</td>
+          <td>
+            <button onClick={() => setEmpId(emp.id)}>VIEW</button>
+            <button>Edit</button>
+            <button>...</button>
+          </td>
         </tr>
-      )}
+      ))}
     </>
   );
 }
+
+export default memo(EmployeeTableRow);
