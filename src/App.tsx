@@ -1,9 +1,12 @@
 import Employees from "./features/employee/Employees";
+import { Providers } from "./providers/Provider";
 
 function App() {
   return (
     <>
-      <Employees />
+      <Providers>
+        <Employees />
+      </Providers>
     </>
   );
 }
