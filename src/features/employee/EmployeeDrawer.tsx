@@ -42,7 +42,7 @@ export default function EmployeeDrawer({
     const fetchEmployee = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://localhost:3001/employee/${empId}`, {
+        const res = await fetch(`http://localhost:3001/api/employee/${empId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
