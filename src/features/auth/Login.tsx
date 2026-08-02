@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { login } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
-type LoginProps = {
-  setIsLogin: (val: boolean) => void;
-};
-export default function Login({ setIsLogin }: LoginProps) {
+export default function Login() {
+  // export default function Login() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
+  });
+  const queryClient = useQueryClient();
+  const mutationLogin = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: ["auth", "current-user"],
+        exact: true,
+      });
+      navigate("/", { replace: true });
+    },
   });
 
   const handleCredChange = (
@@ -19,15 +32,17 @@ export default function Login({ setIsLogin }: LoginProps) {
     });
   };
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hello you tried to login");
-    setIsLogin(true);
+    mutationLogin.mutate({
+      email: user.email,
+      password: user.password,
+    });
   };
   return (
     <div>
       <div>EMPLOYEE PORTAL</div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLoginClick}>
         <div>
           <label htmlFor="email">Email</label>
           <input
