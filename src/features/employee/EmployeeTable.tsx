@@ -1,43 +1,20 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 import EmployeeTableRow from "./EmployeeTableRow";
 import { useDebouncedCallback } from "use-debounce";
+import { useQuery } from "@tanstack/react-query";
+import { getEmployee } from "../../services/employeeService";
+import { Navigate } from "react-router-dom";
+import { isUnAuthorizedError } from "../../services/authHelper";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
   token: string;
 };
-type Employee = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  empId?: string;
-  department: string;
-  job_title: string;
-  teamLeadId: string | null;
-  createdAt: string;
-  status: string;
-};
 
-type EmployeeResponse = {
-  results: Employee[];
-  pagination: {
-    totalPages: number;
-  };
-};
-function EmployeeTable({ setEmpId, token }: EmployeeTableProp) {
-  const [employees, setEmployees] = useState<EmployeeResponse>({
-    results: [],
-    pagination: {
-      totalPages: 1,
-    },
-  });
-  const [isLoading, setIsLoading] = useState(true);
+function EmployeeTable({ setEmpId }: EmployeeTableProp) {
   const [limit, setLimit] = useState<number>(10);
   const [limitInput, setLimitInput] = useState("10");
   const [page, setPage] = useState<number>(1);
-
-  const employeeResult = employees.results.length > 0;
-  const initialState = isLoading && !employeeResult;
 
   const debouncedSetLimit = useDebouncedCallback((value: string) => {
     const newLimit = Number(value);
@@ -53,44 +30,30 @@ function EmployeeTable({ setEmpId, token }: EmployeeTableProp) {
     setLimitInput(value);
     debouncedSetLimit(value);
   };
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://localhost:3001/api/employee?page=${page}&limit=${limit}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            signal: controller.signal,
-          },
-        );
+  const {
+    data: employees = {
+      results: [],
+      pagination: { totalPages: 1 },
+    },
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["employees", page, limit],
+    queryFn: ({ signal }) => getEmployee({ page, limit, signal }),
+  });
 
-        if (!res.ok) {
-          console.log(res.status);
-          setIsLoading(false);
-          return <div>No record found</div>;
-        }
+  const employeeResult = employees.results.length > 0;
+  const initialState = isLoading && !employeeResult;
 
-        const data = await res.json();
-        setEmployees(data);
-      } catch (error) {
-        console.log(error);
-        return <div>error</div>;
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-    return () => controller.abort();
-  }, [page, limit, token]);
+  if (isLoading) return <div>Loading...</div>;
+  if (!employees || employees.results.length === 0)
+    return <div>No Record found</div>;
+  if (isError) {
+    if (isUnAuthorizedError(isError)) {
+      return <Navigate to="/login" replace />;
+    }
+    return <div>Failed to load employee</div>;
+  }
 
   const handleChangePage = (pg: number) => {
     setPage(pg + 1);
