@@ -1,5 +1,12 @@
+import Task from "../features/task/Task";
+
 function TaskPage() {
-  return <div>TASK HERE</div>;
+  return (
+    <div>
+      <Task />
+      <br />
+    </div>
+  );
 }
 
 export default TaskPage;
