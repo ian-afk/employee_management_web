@@ -1,33 +1,45 @@
 export type TasksResponse = {
   message: string;
   status: "success" | string;
-  results: TaskResult[];
+  results: TaskWithAssignment[] | TaskWithOutAssignment[];
   pagination: Pagination;
 };
 
-export type TaskResult = {
-  id: string;
+export type TaskBaseResponse = {
+  message: string;
+  status: string;
+  task: TaskWithAssignment | TaskWithOutAssignment;
+};
 
+export type TaskWithAssignment = TaskBase & {
+  taskAssignments: TaskAssignment[];
+};
+
+export type TaskWithOutAssignment = TaskBase & {
+  taskAssignments: [];
+};
+
+export type TaskBase = {
+  id: string;
   title: string;
   description: string;
-  priority: "HIGH" | string;
-  status: "TODO" | string;
+  priority: string;
+  status: string;
 
-  dueAt: string; // ISO date-time
+  dueAt: string;
   startedAt: string | null;
   completedAt: string | null;
   cancelledAt: string | null;
 
   createdByUserId: string;
 
-  assignedDepartment: string | null; // null allowed (seen in sample)
-  taskAssignments: TaskAssignment[];
+  assignedDepartment: string | null;
 
   isDeleted: boolean;
   deletedAt: string | null;
 
-  createdAt: string; // ISO date-time
-  updatedAt: string; // ISO date-time
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TaskAssignment = {
@@ -40,11 +52,11 @@ export type TaskAssignment = {
   assignedToEmployee: AssignedToEmployee;
   assignedToEmployeeId: string;
 
-  assignedAt: string; // ISO date-time
+  assignedAt: string;
   unassignedAt: string | null;
 
-  createdAt: string; // ISO date-time
-  updatedAt: string; // ISO date-time
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type AssignedByUser = {
