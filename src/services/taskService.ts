@@ -1,6 +1,6 @@
 import { apiClient } from "./apiClient";
 
-import type { TasksResponse } from "../types/task-type";
+import type { TaskBaseResponse, TasksResponse } from "../types/task-type";
 
 export const getTask = async (
   url: string,
@@ -21,5 +21,16 @@ export const getTask = async (
     },
     signal: query.signal,
   });
+  return res;
+};
+
+export const getTaskById = async (
+  url: string,
+  signal?: AbortSignal,
+): Promise<TaskBaseResponse> => {
+  const res: TaskBaseResponse = await apiClient.get(url, {
+    signal,
+  });
+
   return res;
 };
