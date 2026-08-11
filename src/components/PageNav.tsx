@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
+import { useLogout } from "../hooks/useLogout";
+
 function PageNav() {
+  const logout = useLogout();
+
   return (
     <div>
       <nav>
@@ -18,7 +22,9 @@ function PageNav() {
             <Link to="/attendance">Attendance</Link>
           </li>
           <li>
-            <button onClick={() => {}}>Logout</button>
+            <button onClick={() => logout.mutate()} disabled={logout.isPending}>
+              {logout.isPending ? "Logging out" : "Logout"}
+            </button>
           </li>
         </ul>
       </nav>
