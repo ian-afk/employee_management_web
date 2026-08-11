@@ -38,7 +38,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
     isError,
   } = useQuery({
     queryKey: ["employees", page, limit],
-    queryFn: ({ signal }) => getEmployee({ page, limit, signal }),
+    queryFn: ({ signal }) => getEmployee("employee", { page, limit, signal }),
   });
 
   const employeeResult = employees.results.length > 0;
