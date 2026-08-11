@@ -8,7 +8,6 @@ import { isUnAuthorizedError } from "../../services/authHelper";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
-  token: string;
 };
 
 function EmployeeTable({ setEmpId }: EmployeeTableProp) {

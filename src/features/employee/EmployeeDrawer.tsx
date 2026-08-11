@@ -2,9 +2,7 @@ import { useEffect, useState, type SetStateAction } from "react";
 
 type EmployeeDrawerProps = {
   onShowDetails: React.Dispatch<SetStateAction<string>>;
-
   empId: string;
-  token: string;
 };
 
 type EmployeeDetailsType = {
@@ -21,7 +19,6 @@ type EmployeeDetailsType = {
 export default function EmployeeDrawer({
   onShowDetails,
   empId,
-  token,
 }: EmployeeDrawerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [employee, setEmployee] = useState<EmployeeDetailsType>({
@@ -45,7 +42,6 @@ export default function EmployeeDrawer({
         const res = await fetch(`http://localhost:3001/api/employee/${empId}`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           signal: controller.signal,
         });
@@ -64,7 +60,7 @@ export default function EmployeeDrawer({
     };
     fetchEmployee();
     return () => controller.abort();
-  }, [empId, token]);
+  }, [empId]);
 
   return (
     <>
