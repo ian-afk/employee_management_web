@@ -42,7 +42,7 @@ function Task() {
         />
       ))}
 
-      {taskId && <TaskDrawer onSetTaskId={setTaskId} />}
+      {taskId && <TaskDrawer taskId={taskId} onSetTaskId={setTaskId} />}
     </div>
   );
 }
