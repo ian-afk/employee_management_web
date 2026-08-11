@@ -1,10 +1,13 @@
 import type { SetStateAction } from "react";
 import type React from "react";
-import type { TaskResult } from "../../types/task-type";
+import type {
+  TaskWithAssignment,
+  TaskWithOutAssignment,
+} from "../../types/task-type";
 
 type TaskCardProps = {
   onSetTaskId: React.Dispatch<SetStateAction<string>>;
-  task: TaskResult[];
+  task: TaskWithAssignment[] | TaskWithOutAssignment[];
 };
 
 function TaskCard({ onSetTaskId, task }: TaskCardProps) {
