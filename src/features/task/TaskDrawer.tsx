@@ -27,8 +27,34 @@ function TaskDrawer({ onSetTaskId, taskId }: TaskDrawerProps) {
   return (
     <>
       <div>
+        <div>{data?.task?.assignedDepartment}</div>
         <div>{data?.task?.id}</div>
         <div>{data?.task?.title}</div>
+        <div>{data?.task?.description}</div>
+        <div>
+          <div>
+            <span>Task details</span>
+          </div>
+          <div>{data?.task?.status}</div>
+          <div>{data?.task?.priority}</div>
+          <div>
+            <span>Assignee</span>
+            <span>
+              {data?.task?.taskAssignments[0].assignedByUser.employee.firstName}
+              {data?.task?.taskAssignments[0].assignedByUser.employee.lastName}
+            </span>
+          </div>
+          <div>
+            <span>Assigned To</span>
+            <span>
+              {data?.task?.taskAssignments[0].assignedToEmployee.firstName}
+              {data?.task?.taskAssignments[0].assignedToEmployee.lastName}
+            </span>
+          </div>
+          <div>
+            <span>Due at</span> <span>{data?.task.dueAt}</span>
+          </div>
+        </div>
         <div>{<button onClick={() => onSetTaskId("")}>Close</button>}</div>
       </div>
     </>
