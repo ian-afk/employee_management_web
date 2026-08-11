@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import EmployeePage from "./pages/EmployeePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TaskPage from "./pages/TaskPage";
+import AttendancePage from "./pages/AttendancePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="employee" element={<EmployeePage />} />
             <Route path="task" element={<TaskPage />} />
+            <Route path="attendance" element={<AttendancePage />} />
           </Route>
           <Route path="*" element={<PageNoutFound />} />
         </Routes>

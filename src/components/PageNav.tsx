@@ -15,6 +15,9 @@ function PageNav() {
             <Link to="/task">Task</Link>
           </li>
           <li>
+            <Link to="/attendance">Attendance</Link>
+          </li>
+          <li>
             <button onClick={() => {}}>Logout</button>
           </li>
         </ul>
