@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import PageNav from "./PageNav";
+import PageNav from "./layout/page-nav/PageNav";
 
 function ProtectedRoute() {
   const { data: user, isLoading, isError } = useCurrentUser();
@@ -11,10 +11,12 @@ function ProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
   return (
-    <>
+    <div className="flex min-h-screen bg-[#f4f7fb]">
       <PageNav />
-      <Outlet />
-    </>
+      <main className="min-w-0 flex-1">
+        <Outlet />
+      </main>
+    </div>
   );
 }
 
