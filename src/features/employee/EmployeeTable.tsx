@@ -8,7 +8,6 @@ import { isUnAuthorizedError } from "../../services/authHelper";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
-  token: string;
 };
 
 function EmployeeTable({ setEmpId }: EmployeeTableProp) {
@@ -39,7 +38,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
     isError,
   } = useQuery({
     queryKey: ["employees", page, limit],
-    queryFn: ({ signal }) => getEmployee({ page, limit, signal }),
+    queryFn: ({ signal }) => getEmployee("employee", { page, limit, signal }),
   });
 
   const employeeResult = employees.results.length > 0;

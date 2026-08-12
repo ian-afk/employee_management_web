@@ -1,74 +1,43 @@
-import { useEffect, useState, type SetStateAction } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { type SetStateAction } from "react";
+import { getEmployeeId } from "../../services/employeeService";
+import { isUnAuthorizedError } from "../../services/authHelper";
+import { Navigate } from "react-router-dom";
 
 type EmployeeDrawerProps = {
   onShowDetails: React.Dispatch<SetStateAction<string>>;
-
   empId: string;
-  token: string;
 };
 
-type EmployeeDetailsType = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  dob: string;
-  jobTitle: string;
-  department: string;
-  status: string;
-  teamLead: string;
-  createdAt: string;
-};
 export default function EmployeeDrawer({
   onShowDetails,
   empId,
-  token,
 }: EmployeeDrawerProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [employee, setEmployee] = useState<EmployeeDetailsType>({
-    id: "",
-    firstName: "",
-    lastName: "",
-    dob: "",
-    jobTitle: "",
-    department: "",
-    status: "",
-    teamLead: "",
-    createdAt: "",
+  const {
+    data: emp,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["employees", empId],
+    queryFn: async ({ signal }) =>
+      getEmployeeId(`employee/${empId}`, { signal: signal }),
   });
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const initialState = isLoading && !emp;
+  if (isLoading) return <div>Loading...</div>;
+  if (!emp) return <div>No Record found</div>;
+  if (isError) {
+    if (isUnAuthorizedError(isError)) {
+      return <Navigate to="/login" replace />;
+    }
+    return <div>Something went wrong</div>;
+  }
 
-    const fetchEmployee = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`http://localhost:3001/api/employee/${empId}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          signal: controller.signal,
-        });
-
-        if (!res.ok) throw new Error("status failed employee drawer");
-
-        const data = await res.json();
-        setEmployee(data);
-      } catch (error) {
-        console.log(`something went wrong: ${error}`);
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
-        }
-      }
-    };
-    fetchEmployee();
-    return () => controller.abort();
-  }, [empId, token]);
+  const employee = emp?.employee;
 
   return (
     <>
-      {isLoading ? (
+      {initialState ? (
         <div>
           <span>Loading...</span>
         </div>
@@ -85,7 +54,7 @@ export default function EmployeeDrawer({
                   {employee.firstName} {employee.lastName}
                 </span>
                 <span>
-                  {employee.jobTitle} {employee.department}
+                  {employee.job_title} {employee.department}
                 </span>
               </div>
               <div>
@@ -111,7 +80,7 @@ export default function EmployeeDrawer({
               </div>
               <div>
                 <label htmlFor="">POSITION</label>
-                <span>{employee.jobTitle}</span>
+                <span>{employee.job_title}</span>
               </div>
             </div>
           </div>
