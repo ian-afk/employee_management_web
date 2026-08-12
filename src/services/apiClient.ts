@@ -50,11 +50,12 @@ export const apiClient = {
     const res = await client.get(`/${query}`, config);
     return res.data;
   },
-  post: async <T>(
+  post: async <TResponse, TBody = unknown>(
     query: string,
-    body?: { email: string; password: string },
-  ): Promise<T> => {
-    const res = await client.post(`/${query}`, body);
+    body?: TBody,
+    config?: AxiosRequestConfig,
+  ): Promise<TResponse> => {
+    const res = await client.post(`/${query}`, body, config);
     return res.data;
   },
 };

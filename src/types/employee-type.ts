@@ -45,3 +45,15 @@ export type EmployeeListResponse = {
   results: Employee[];
   pagination: Pagination;
 };
+
+export type EmployeeFormValues = {
+  firstName: string;
+  lastName: string;
+  age: number;
+  dob: string;
+  jobTitle: string;
+  department: string;
+  teamLeadId: string;
+  scheduleTimeIn: string;
+  scheduleTimeOut: string;
+};

@@ -1,4 +1,5 @@
 import type {
+  EmployeeFormValues,
   EmployeeListResponse,
   EmployeeSingleResponse,
 } from "../types/employee-type";
@@ -33,5 +34,10 @@ export const getEmployeeId = async (
     signal: query.signal,
   });
 
+  return res;
+};
+
+export const postEmployee = async (formData: EmployeeFormValues) => {
+  const res = await apiClient.post("employee/add", formData);
   return res;
 };
