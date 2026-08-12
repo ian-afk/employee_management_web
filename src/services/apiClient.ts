@@ -46,7 +46,7 @@ client.interceptors.response.use(
   },
 );
 export const apiClient = {
-  get: async <T>(query: string, config: AxiosRequestConfig): Promise<T> => {
+  get: async <T>(query?: string, config?: AxiosRequestConfig): Promise<T> => {
     const res = await client.get(`/${query}`, config);
     return res.data;
   },
