@@ -1,5 +1,7 @@
 import type { InputHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
+import FormError from "./FormError";
+import FormLabel from "./FormLabel";
 type FormInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "id"> & {
   id: string;
   label: string;
@@ -17,15 +19,15 @@ function FormInput({
 }: FormInputProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id}>{label}</label>
+      <FormLabel id={id} label={label} />
       <input
         id={id}
         type={type}
         {...registration}
         {...inputProps}
-        className="border-2 px-2 py-1"
+        className="h-10 rounded-lg border border-[#d3dce9] bg-white px-3 text-sm text-[#172033] outline-none transition-colors hover:border-[#aebbd0] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
       />
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <FormError err={error} />}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { ReactNode, SelectHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
+import FormError from "./FormError";
 
 type FormSelectProps<T> = Omit<
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -30,12 +31,14 @@ function FormSelect<T>({
 }: FormSelectProps<T>) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id}>{label}</label>
+      <label className="text-sm font-semibold text-[#35415a]" htmlFor={id}>
+        {label}
+      </label>
       <select
         id={id}
         {...selectProps}
         {...registration}
-        className="border-2 px-2 py-1"
+        className="h-10 rounded-lg border border-[#d3dce9] bg-white px-3 text-sm text-[#172033] outline-none transition-colors hover:border-[#aebbd0] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
       >
         <option value="" disabled selected>
           {placeHolder}
@@ -49,7 +52,7 @@ function FormSelect<T>({
           );
         })}
       </select>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <FormError err={error} />}
     </div>
   );
 }
