@@ -13,7 +13,7 @@ function ProtectedRoute() {
   return (
     <div className="flex min-h-screen bg-[#f4f7fb]">
       <PageNav />
-      <main className="min-w-0 flex-1">
+      <main className="min-w-0 flex-1 m-4">
         <Outlet />
       </main>
     </div>
