@@ -2,9 +2,9 @@ import { memo, useState } from "react";
 import EmployeeTableRow from "./EmployeeTableRow";
 import { useDebouncedCallback } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
-import { getEmployee } from "../../services/employeeService";
+import { getEmployee } from "../../../services/employeeService";
 import { Navigate } from "react-router-dom";
-import { isUnAuthorizedError } from "../../services/authHelper";
+import { isUnAuthorizedError } from "../../../services/authHelper";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
