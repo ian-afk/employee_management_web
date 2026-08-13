@@ -10,6 +10,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { usePage } from "../../../hooks/usePage";
 import EmployeeTableHead from "./EmployeeTableHead";
 import EmployeeTableSkeleton from "./EmployeeTableSkeleton";
+import EmployeeTableEmpty from "./EmployeeTableEmpty";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
@@ -115,9 +116,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                   setEmpId={setEmpId}
                 />
               ) : (
-                <tr>
-                  <td>No record found</td>
-                </tr>
+                <EmployeeTableEmpty />
               )}
             </tbody>
           </table>
