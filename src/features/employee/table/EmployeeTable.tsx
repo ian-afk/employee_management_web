@@ -5,6 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getEmployee } from "../../../services/employeeService";
 import { Navigate } from "react-router-dom";
 import { isUnAuthorizedError } from "../../../services/authHelper";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { usePage } from "../../../hooks/usePage";
 
 type EmployeeTableProp = {
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
@@ -13,8 +16,8 @@ type EmployeeTableProp = {
 function EmployeeTable({ setEmpId }: EmployeeTableProp) {
   const [limit, setLimit] = useState<number>(10);
   const [limitInput, setLimitInput] = useState("10");
-  const [page, setPage] = useState<number>(1);
-
+  // const [page, setPage] = useState<number>(1);
+  const [{ page }, dispatch] = usePage();
   const tableHead = [
     "Employee",
     "Employee ID",
@@ -30,7 +33,10 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
 
     if (Number.isFinite(newLimit) && newLimit > 0) {
       setLimit(newLimit);
-      setPage(1);
+      // setPage(1);
+      dispatch({
+        type: "initialize",
+      });
       setEmpId("");
     }
   }, 500);
@@ -52,6 +58,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
   });
 
   const employeeResult = employees.results.length > 0;
+  const totalPages = employees.pagination.totalPages;
   const initialState = isLoading && !employeeResult;
 
   if (isLoading) return <div>Loading...</div>;
@@ -65,7 +72,10 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
   }
 
   const handleChangePage = (pg: number) => {
-    setPage(pg + 1);
+    dispatch({
+      type: "setPage",
+      payload: pg,
+    });
     setEmpId("");
   };
 
@@ -147,6 +157,12 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                     <span className="mr-1 text-xs font-semibold text-[#647089]">
                       Page
                     </span>
+                    <button
+                      onClick={() => dispatch({ type: "prev" })}
+                      disabled={page <= 1}
+                    >
+                      <ChevronLeftIcon />
+                    </button>
                     {Array.from(
                       { length: employees?.pagination?.totalPages ?? 0 },
                       (_, index) => (
@@ -158,7 +174,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                               ? "border-[#2f66e8] bg-[#2f66e8] text-white"
                               : "border-[#d3dce9] bg-white text-[#536078] hover:border-[#aebbd0] hover:bg-[#f4f7fb]"
                           }`}
-                          onClick={() => handleChangePage(index)}
+                          onClick={() => handleChangePage(index + 1)}
                           aria-current={page === index + 1 ? "page" : undefined}
                           aria-label={`Go to page ${index + 1}`}
                         >
@@ -166,6 +182,12 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                         </button>
                       ),
                     )}
+                    <button
+                      onClick={() => dispatch({ type: "next" })}
+                      disabled={page >= totalPages}
+                    >
+                      <ChevronRightIcon />
+                    </button>
                   </div>
                 )}
               </div>
