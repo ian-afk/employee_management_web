@@ -1,15 +1,8 @@
-function EmployeeTableHead() {
-  const tableHead = [
-    "Employee",
-    "Employee ID",
-    "Department",
-    "Job title",
-    "Team Leader",
-    "Hire Date",
-    "Status",
-    "Action",
-  ];
+type TableHeadProps = {
+  tableHead: string[];
+};
 
+function TableHead({ tableHead }: TableHeadProps) {
   return (
     <thead className="sticky top-0 z-10 border-b border-[#dfe6f0] bg-[#f8fafd]">
       <tr>
@@ -27,4 +20,4 @@ function EmployeeTableHead() {
   );
 }
 
-export default EmployeeTableHead;
+export default TableHead;
