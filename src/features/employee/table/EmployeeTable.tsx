@@ -48,7 +48,14 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
   const {
     data: employees = {
       results: [],
-      pagination: { totalPages: 1 },
+      pagination: {
+        totalItems: 0,
+        itemsPerPage: limit,
+        totalPages: 1,
+        currentPage: 1,
+        previousPage: null,
+        nextPage: null,
+      },
     },
     isLoading,
     isError,
@@ -59,6 +66,12 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
 
   const employeeResult = employees.results.length > 0;
   const totalPages = employees.pagination.totalPages;
+  const totalEmployees = employees.pagination.totalItems;
+  const firstEmployee = (page - 1) * limit + 1;
+  const lastEmployee = Math.min(
+    firstEmployee + employees.results.length - 1,
+    totalEmployees,
+  );
   const initialState = isLoading && !employeeResult;
 
   if (isLoading) return <div>Loading...</div>;
@@ -132,6 +145,10 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                 </table>
               </div>
               <div className="mt-4 flex flex-col gap-3 rounded-xl border border-[#dfe6f0] bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <span>
+                  Showing {firstEmployee}-{lastEmployee} of {totalEmployees}{" "}
+                  employees
+                </span>
                 <div className="flex items-center gap-2">
                   <label
                     className="text-xs font-semibold text-[#647089]"
@@ -148,48 +165,50 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                     name="limit"
                     onChange={handleChangeLimit}
                   />
+                  {employees?.pagination?.totalPages && (
+                    <div
+                      className="flex flex-wrap items-center gap-2"
+                      aria-label="Employee table pagination"
+                    >
+                      <span className="mr-1 text-xs font-semibold text-[#647089]">
+                        Page
+                      </span>
+                      <button
+                        onClick={() => dispatch({ type: "prev" })}
+                        disabled={page <= 1}
+                      >
+                        <ChevronLeftIcon />
+                      </button>
+                      {Array.from(
+                        { length: employees?.pagination?.totalPages ?? 0 },
+                        (_, index) => (
+                          <button
+                            type="button"
+                            key={index}
+                            className={`h-9 min-w-9 rounded-lg border px-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] ${
+                              page === index + 1
+                                ? "border-[#2f66e8] bg-[#2f66e8] text-white"
+                                : "border-[#d3dce9] bg-white text-[#536078] hover:border-[#aebbd0] hover:bg-[#f4f7fb]"
+                            }`}
+                            onClick={() => handleChangePage(index + 1)}
+                            aria-current={
+                              page === index + 1 ? "page" : undefined
+                            }
+                            aria-label={`Go to page ${index + 1}`}
+                          >
+                            {index + 1}
+                          </button>
+                        ),
+                      )}
+                      <button
+                        onClick={() => dispatch({ type: "next" })}
+                        disabled={page >= totalPages}
+                      >
+                        <ChevronRightIcon />
+                      </button>
+                    </div>
+                  )}
                 </div>
-                {employees?.pagination?.totalPages && (
-                  <div
-                    className="flex flex-wrap items-center gap-2"
-                    aria-label="Employee table pagination"
-                  >
-                    <span className="mr-1 text-xs font-semibold text-[#647089]">
-                      Page
-                    </span>
-                    <button
-                      onClick={() => dispatch({ type: "prev" })}
-                      disabled={page <= 1}
-                    >
-                      <ChevronLeftIcon />
-                    </button>
-                    {Array.from(
-                      { length: employees?.pagination?.totalPages ?? 0 },
-                      (_, index) => (
-                        <button
-                          type="button"
-                          key={index}
-                          className={`h-9 min-w-9 rounded-lg border px-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] ${
-                            page === index + 1
-                              ? "border-[#2f66e8] bg-[#2f66e8] text-white"
-                              : "border-[#d3dce9] bg-white text-[#536078] hover:border-[#aebbd0] hover:bg-[#f4f7fb]"
-                          }`}
-                          onClick={() => handleChangePage(index + 1)}
-                          aria-current={page === index + 1 ? "page" : undefined}
-                          aria-label={`Go to page ${index + 1}`}
-                        >
-                          {index + 1}
-                        </button>
-                      ),
-                    )}
-                    <button
-                      onClick={() => dispatch({ type: "next" })}
-                      disabled={page >= totalPages}
-                    >
-                      <ChevronRightIcon />
-                    </button>
-                  </div>
-                )}
               </div>
             </>
           ) : (
