@@ -35,7 +35,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
     refetch,
   } = useQuery({
     queryKey: ["users"],
-    queryFn: () => getTeamLead(),
+    queryFn: () => getTeamLead({ role: "TEAM LEAD" }),
   });
 
   const handleCancel = () => {
