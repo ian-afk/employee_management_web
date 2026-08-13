@@ -1,7 +1,8 @@
 import { useState } from "react";
 import EmployeeTable from "./EmployeeTable";
-import EmployeeDrawer from "./EmployeeDrawer";
+import EmployeeDetails from "./EmployeeDetails";
 import EmployeeCreateDialog from "./create/EmployeeCreateDialog";
+import Drawer from "../../components/drawer/Drawer";
 
 export default function Employees() {
   const [empId, setEmpId] = useState("");
@@ -10,7 +11,15 @@ export default function Employees() {
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <button onClick={() => setShowModal(!showModal)}>Add Employee</button>
       <EmployeeTable setEmpId={setEmpId} />
-      {empId && <EmployeeDrawer onShowDetails={setEmpId} empId={empId} />}
+      {empId && (
+        <Drawer
+          onShowDetails={setEmpId}
+          drawerHeader="Employee Details"
+          drawerInformation="Employee Information"
+        >
+          <EmployeeDetails empId={empId} />
+        </Drawer>
+      )}
       {showModal && <EmployeeCreateDialog onSetShowModal={setShowModal} />}
     </div>
   );
