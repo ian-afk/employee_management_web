@@ -15,7 +15,7 @@ function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
     <>
       {employee.map((emp) => (
         <tr
-          className="border-b border-[#edf1f6] text-[13px] text-[#43506a] transition-colors duration-150 last:border-b-0 hover:bg-[#f9fbfe]"
+          className="h-[69px] border-b border-[#edf1f6] text-[13px] text-[#43506a] transition-colors duration-150 last:border-b-0 hover:bg-[#f9fbfe]"
           key={emp.id}
         >
           <td className="px-6 py-[18px]">

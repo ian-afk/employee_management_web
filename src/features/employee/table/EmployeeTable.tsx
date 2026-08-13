@@ -101,9 +101,9 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
       ) : (
         <>
           {employeeResult ? (
-            <>
+            <div className="overflow-hidden rounded-2xl border border-[#dfe6f0] bg-white shadow-[0_10px_30px_rgba(23,32,51,0.06)]">
               <div
-                className="w-full overflow-x-auto rounded-2xl border border-[#dfe6f0] bg-white shadow-[0_10px_30px_rgba(23,32,51,0.06)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff]"
+                className="h-[431px] w-full overflow-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#9bb7ff]"
                 role="region"
                 aria-label="Employee directory table"
                 tabIndex={0}
@@ -123,7 +123,7 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                     <col className="w-[8%]" />
                     <col className="w-[10%]" />
                   </colgroup>
-                  <thead className="border-b border-[#dfe6f0] bg-[#f8fafd]">
+                  <thead className="sticky top-0 z-10 border-b border-[#dfe6f0] bg-[#f8fafd]">
                     <tr>
                       {tableHead.map((item) => (
                         <th
@@ -144,40 +144,45 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                   </tbody>
                 </table>
               </div>
-              <div className="mt-4 flex flex-col gap-3 rounded-xl border border-[#dfe6f0] bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                <span>
+              <div className="flex min-h-[72px] flex-col gap-4 border-t border-[#dfe6f0] bg-white px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
+                <span className="text-sm text-[#71809d]">
                   Showing {firstEmployee}-{lastEmployee} of {totalEmployees}{" "}
                   employees
                 </span>
-                <div className="flex items-center gap-2">
-                  <label
-                    className="text-xs font-semibold text-[#647089]"
-                    htmlFor="employee-limit"
-                  >
-                    Limit
-                  </label>
-                  <input
-                    id="employee-limit"
-                    className="h-9 w-20 rounded-lg border border-[#d3dce9] bg-white px-3 text-sm text-[#172033] outline-none transition-colors hover:border-[#aebbd0] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
-                    min={1}
-                    type="number"
-                    value={limitInput}
-                    name="limit"
-                    onChange={handleChangeLimit}
-                  />
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <div className="flex items-center gap-2">
+                    <label
+                      className="text-xs font-semibold text-[#647089]"
+                      htmlFor="employee-limit"
+                    >
+                      Limit
+                    </label>
+                    <input
+                      id="employee-limit"
+                      className="h-10 w-16 rounded-lg border border-[#d8e1ee] bg-white px-2 text-center text-sm font-semibold text-[#43506a] outline-none transition-colors hover:border-[#b8c5d8] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
+                      min={1}
+                      type="number"
+                      value={limitInput}
+                      name="limit"
+                      onChange={handleChangeLimit}
+                    />
+                  </div>
                   {employees?.pagination?.totalPages && (
                     <div
-                      className="flex flex-wrap items-center gap-2"
+                      className="flex flex-wrap items-center gap-2 sm:border-l sm:border-[#dfe6f0] sm:pl-3"
                       aria-label="Employee table pagination"
                     >
                       <span className="mr-1 text-xs font-semibold text-[#647089]">
                         Page
                       </span>
                       <button
+                        type="button"
+                        className="grid h-10 min-w-10 place-items-center rounded-full text-[#283f6e] transition-[color,background-color,opacity] hover:bg-[#eef3fb] hover:text-[#2f66e8] disabled:cursor-not-allowed disabled:text-[#aeb8c8] disabled:opacity-35 disabled:hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff]"
                         onClick={() => dispatch({ type: "prev" })}
                         disabled={page <= 1}
+                        aria-label="Previous page"
                       >
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon className="!h-5 !w-5" />
                       </button>
                       {Array.from(
                         { length: employees?.pagination?.totalPages ?? 0 },
@@ -185,10 +190,10 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                           <button
                             type="button"
                             key={index}
-                            className={`h-9 min-w-9 rounded-lg border px-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] ${
+                            className={`h-10 min-w-10 rounded-lg border px-2 text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] ${
                               page === index + 1
-                                ? "border-[#2f66e8] bg-[#2f66e8] text-white"
-                                : "border-[#d3dce9] bg-white text-[#536078] hover:border-[#aebbd0] hover:bg-[#f4f7fb]"
+                                ? "border-[#2f66e8] bg-[#2f66e8] text-white shadow-sm"
+                                : "border-[#d8e1ee] bg-white text-[#71809d] hover:border-[#b8c5d8] hover:bg-[#f7f9fc] hover:text-[#43506a]"
                             }`}
                             onClick={() => handleChangePage(index + 1)}
                             aria-current={
@@ -201,16 +206,19 @@ function EmployeeTable({ setEmpId }: EmployeeTableProp) {
                         ),
                       )}
                       <button
+                        type="button"
+                        className="grid h-10 min-w-10 place-items-center rounded-full text-[#283f6e] transition-[color,background-color,opacity] hover:bg-[#eef3fb] hover:text-[#2f66e8] disabled:cursor-not-allowed disabled:text-[#aeb8c8] disabled:opacity-35 disabled:hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff]"
                         onClick={() => dispatch({ type: "next" })}
                         disabled={page >= totalPages}
+                        aria-label="Next page"
                       >
-                        <ChevronRightIcon />
+                        <ChevronRightIcon className="!h-5 !w-5" />
                       </button>
                     </div>
                   )}
                 </div>
               </div>
-            </>
+            </div>
           ) : (
             <>No record found</>
           )}
