@@ -4,6 +4,7 @@ import { isUnAuthorizedError } from "../../services/authHelper";
 import { Navigate } from "react-router-dom";
 
 import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { dateformatter } from "../../utils/dateformatter";
 
 type EmployeeDetailsProps = {
   empId: string;
@@ -65,7 +66,7 @@ export default function EmployeeDetails({ empId }: EmployeeDetailsProps) {
                         emp.employee ID
                       </dt>
                       <dd className="mt-1 break-words text-sm font-semibold text-[#172033]">
-                        {emp.employee.id}
+                        {emp.employee.empId}
                       </dd>
                     </div>
                     <div className="min-w-0">
@@ -73,7 +74,7 @@ export default function EmployeeDetails({ empId }: EmployeeDetailsProps) {
                         Hire date
                       </dt>
                       <dd className="mt-1 break-words text-sm font-semibold text-[#172033]">
-                        {emp.employee.createdAt}
+                        {dateformatter(emp.employee.createdAt)}
                       </dd>
                     </div>
                     <div className="min-w-0">

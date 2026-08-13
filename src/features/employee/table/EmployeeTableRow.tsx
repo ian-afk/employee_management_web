@@ -2,21 +2,12 @@ import { memo } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import type { Employee } from "../../../types/employee-type";
+import { dateformatter } from "../../../utils/dateformatter";
 
 type EmployeeTableRowProp = {
   employee: Employee[] | [];
   setEmpId: React.Dispatch<React.SetStateAction<string>>;
-};
-type Employee = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  empId?: string;
-  department: string;
-  job_title: string;
-  teamLeadId: string | null;
-  createdAt: string;
-  status: string;
 };
 
 function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
@@ -34,7 +25,7 @@ function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
           </td>
           <td className="px-4 py-[18px]">
             <span className="block truncate font-mono text-[12px] text-[#35415a]">
-              {emp.id}
+              {emp.empId}
             </span>
           </td>
           <td className="px-4 py-[18px]">
@@ -47,11 +38,13 @@ function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
           </td>
           <td className="px-4 py-[18px]">
             <span className="block truncate font-mono text-[11px] text-[#647089]">
-              {emp.teamLeadId}
+              {emp.teamLead?.firstName} {emp.teamLead?.lastName}
             </span>
           </td>
           <td className="px-4 py-[18px]">
-            <span className="block truncate text-[12px]">{emp.createdAt}</span>
+            <span className="block truncate text-[12px]">
+              {dateformatter(emp.createdAt)}
+            </span>
           </td>
           <td className="px-4 py-[18px]">
             <span className="inline-flex rounded-full bg-[#eef3fb] px-2.5 py-1 text-[10px] font-extrabold text-[#43506a] ring-1 ring-inset ring-[#d8e1ee]">

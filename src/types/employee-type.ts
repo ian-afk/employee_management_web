@@ -2,6 +2,7 @@ export type Employee = {
   id: string;
   employeeGenId: number;
 
+  empId: string;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -13,6 +14,7 @@ export type Employee = {
   department: string;
   status: string;
 
+  teamLead: TeamLead;
   teamLeadId: string | null;
 
   scheduleTimeIn: string; // "9:00:00"
@@ -22,6 +24,14 @@ export type Employee = {
 
   createdAt: string; // ISO
   updatedAt: string; // ISO
+};
+
+export type TeamLead = {
+  id: string;
+  employeeGenId: number;
+  empId: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type Pagination = {
