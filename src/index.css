@@ -1,3 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .employee-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #dfe6f0;
+    border-radius: 10px;
+    background: white;
+  }
+
+  .employee-table-wrapper:focus-visible {
+    outline: 2px solid #9bb7ff;
+    outline-offset: 2px;
+  }
+
+  .employee-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+    text-align: left;
+    color: #43506a;
+    font-size: 13px;
+  }
+
+  .employee-table th,
+  .employee-table td {
+    padding: 14px 16px;
+  }
+
+  .employee-table th {
+    border-bottom: 1px solid #dfe6f0;
+    background: #f7f9fc;
+    color: #647089;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .employee-row {
+    border-bottom: 1px solid #edf1f6;
+  }
+
+  .employee-row:last-child {
+    border-bottom: 0;
+  }
+
+  .employee-row:hover {
+    background: #f9fbfe;
+  }
+
+  .employee-row td:first-child {
+    color: #172033;
+    font-weight: 600;
+  }
+
+  .employee-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #eef3fb;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .employee-actions {
+    display: flex;
+    gap: 4px;
+  }
+
+  .employee-action {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #dfe6f0;
+    border-radius: 6px;
+    background: white;
+    color: #536078;
+  }
+
+  .employee-action:hover {
+    background: #eef3fb;
+    color: #2f66e8;
+  }
+
+  .employee-action:focus-visible {
+    outline: 2px solid #9bb7ff;
+    outline-offset: 1px;
+  }
+
+  .employee-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}

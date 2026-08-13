@@ -1,14 +1,28 @@
 import { useState } from "react";
-import EmployeeTable from "./EmployeeTable";
-import EmployeeDrawer from "./EmployeeDrawer";
+import EmployeeTable from "./table/EmployeeTable";
+import EmployeeDetails from "./EmployeeDetails";
+import EmployeeCreateDialog from "./create/EmployeeCreateDialog";
+import Drawer from "../../components/drawer/Drawer";
+import EmployeeHeader from "./EmployeeHeader";
 
 export default function Employees() {
   const [empId, setEmpId] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <div className="flex flex-col gap-6 p-6 lg:p-8">
+      <EmployeeHeader onSetShowModal={setShowModal} showModal={showModal} />
+
       <EmployeeTable setEmpId={setEmpId} />
-      {empId && <EmployeeDrawer onShowDetails={setEmpId} empId={empId} />}
+      {empId && (
+        <Drawer
+          onShowDetails={setEmpId}
+          drawerHeader="Employee Details"
+          drawerInformation="Employee Information"
+        >
+          <EmployeeDetails empId={empId} />
+        </Drawer>
+      )}
+      {showModal && <EmployeeCreateDialog onSetShowModal={setShowModal} />}
     </div>
   );
 }
