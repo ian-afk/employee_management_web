@@ -2,6 +2,7 @@ import type {
   EmployeeFormValues,
   EmployeeListResponse,
   EmployeeSingleResponse,
+  EmployeeSummaryResponse,
 } from "../types/employee-type";
 import { apiClient } from "./apiClient";
 
@@ -39,5 +40,15 @@ export const getEmployeeId = async (
 
 export const postEmployee = async (formData: EmployeeFormValues) => {
   const res = await apiClient.post("employee/add", formData);
+  return res;
+};
+
+export const getEmployeeSummary = async (query: {
+  signal?: AbortSignal;
+}): Promise<EmployeeSummaryResponse> => {
+  const res: EmployeeSummaryResponse = await apiClient.get("employee/summary", {
+    signal: query.signal,
+  });
+
   return res;
 };

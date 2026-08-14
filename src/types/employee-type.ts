@@ -67,3 +67,22 @@ export type EmployeeFormValues = {
   scheduleTimeIn: string;
   scheduleTimeOut: string;
 };
+
+export type EmployeeSummaryResponse = {
+  message: string;
+  status: "success" | string;
+  summary: EmployeeSummary;
+};
+
+export type EmployeeSummary = {
+  total: number;
+  total_current_emp: number;
+  pending: number;
+  active: number;
+  hold: number;
+  suspended: number;
+  deleted: number;
+  terminated: number;
+  resigned: number;
+  new_hire: number;
+};
