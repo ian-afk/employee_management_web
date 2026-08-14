@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, type ReactNode } from "react";
 import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 type ApiErrorResponse = {
   statusCode: number;
   message: string;
@@ -14,6 +16,8 @@ type ApiErrorResponse = {
 export default function Login() {
   // export default function Login() {
   const [error, setError] = useState<string | null>();
+  const [passwordType, setPasswordType] = useState<string>("password");
+  const [icon, setIcon] = useState<ReactNode>(<VisibilityOffOutlinedIcon />);
   const [emailError, setEmailError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -68,6 +72,17 @@ export default function Login() {
       password: user.password,
     });
   };
+
+  const handleHidePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      setIcon(<RemoveRedEyeOutlinedIcon />);
+    }
+    if (passwordType === "text") {
+      setPasswordType("password");
+      setIcon(<VisibilityOffOutlinedIcon />);
+    }
+  };
   return (
     <div>
       <div>EMPLOYEE PORTAL</div>
@@ -96,12 +111,13 @@ export default function Login() {
         <div>
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={passwordType}
             name="password"
             value={user.password}
             min={8}
             onChange={handleCredChange}
           />
+          <span onClick={handleHidePassword}>{icon}</span>
         </div>
         <button type="submit">Login</button>
       </form>
