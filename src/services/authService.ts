@@ -1,9 +1,11 @@
+import type { ApiErrorResponse, LoginResponse } from "../types/auth-type";
 import { apiClient } from "./apiClient";
 
 export async function login(body: { email: string; password: string }) {
-  const res: { accessToken: string; refreshToken: string } =
-    await apiClient.post("auth/login", body);
-  return res;
+  return await apiClient.post<LoginResponse | ApiErrorResponse>(
+    "auth/login",
+    body,
+  );
 }
 
 export async function logout() {

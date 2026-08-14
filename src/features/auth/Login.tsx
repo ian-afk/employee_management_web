@@ -2,9 +2,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+type ApiErrorResponse = {
+  statusCode: number;
+  message: string;
+  error: string;
+};
 
 export default function Login() {
   // export default function Login() {
+  const [error, setError] = useState<string | null>();
+  const [emailError, setEmailError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -13,12 +23,20 @@ export default function Login() {
   const queryClient = useQueryClient();
   const mutationLogin = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setError(null);
+
       queryClient.removeQueries({
         queryKey: ["auth", "current-user"],
         exact: true,
       });
+      toast.success(`${data.message}`);
       navigate("/", { replace: true });
+    },
+    onError: (error) => {
+      if (axios.isAxiosError<ApiErrorResponse>(error)) {
+        setError(error?.response?.data.message ?? "Login request failed");
+      }
     },
   });
 
@@ -32,6 +50,17 @@ export default function Login() {
     });
   };
 
+  const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const input = e.currentTarget;
+
+    if (input.validity.valueMissing) {
+      setEmailError("Email is required");
+    } else if (input.validity.typeMismatch) {
+      setEmailError("Please enter a valid email address example@email.com");
+    } else {
+      setEmailError(null);
+    }
+  };
   const handleLoginClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutationLogin.mutate({
@@ -46,11 +75,23 @@ export default function Login() {
         <div>
           <label htmlFor="email">Email</label>
           <input
-            type="text"
+            type="email"
             name="email"
+            required
             value={user.email}
-            onChange={handleCredChange}
+            onChange={(
+              e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
+            ) => {
+              handleCredChange(e);
+              setEmailError(null);
+            }}
+            onBlur={handleEmailBlur}
           />
+          {emailError && (
+            <p id="email-error" role="alert">
+              {emailError}
+            </p>
+          )}
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -58,11 +99,13 @@ export default function Login() {
             type="password"
             name="password"
             value={user.password}
+            min={8}
             onChange={handleCredChange}
           />
         </div>
         <button type="submit">Login</button>
       </form>
+      {error && <p>{error}</p>}
     </div>
   );
 }
