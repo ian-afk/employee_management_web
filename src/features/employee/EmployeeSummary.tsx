@@ -7,13 +7,28 @@ import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import AddReactionOutlinedIcon from "@mui/icons-material/AddReactionOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import SummaryCard from "../../components/card/SummaryCard";
+import SummaryCardSkeleton from "../../components/card/SummaryCardSkeleton";
+
+const summarySkeletons = Array.from({ length: 4 });
+
 function EmployeeSummary() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["employees"],
     queryFn: async ({ signal }) => getEmployeeSummary({ signal }),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <section
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        aria-label="Loading employee summary"
+        aria-busy="true"
+      >
+        {summarySkeletons.map((_, index) => (
+          <SummaryCardSkeleton key={index} />
+        ))}
+      </section>
+    );
   if (!data) return <div> No record found</div>;
   if (isError) {
     if (isUnAuthorizedError(error)) {
@@ -22,43 +37,46 @@ function EmployeeSummary() {
   }
 
   const summary = data.summary;
-  console.log(summary);
 
   const activePercentrage =
     summary.total_current_emp > 0
       ? (summary.active / summary.total_current_emp) * 100
       : 0;
   return (
-    <div>
+    <section
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      aria-label="Employee summary"
+    >
       <SummaryCard
         icon={<PersonOutlineOutlinedIcon />}
         title="Total workforce"
         details={summary.total_current_emp}
         cardFooter={`    ${summary.active} active • ${summary.total_current_emp - summary.active}
           inactive`}
+        tone="blue"
       />
       <SummaryCard
         icon={<CheckBoxOutlinedIcon />}
         title="Active Employee"
-        details={
-          summary.total_current_emp -
-          (summary.total - summary.total_current_emp)
-        }
+        details={summary.active}
         cardFooter={`${activePercentrage.toFixed(1)}% workforce activation`}
+        tone="green"
       />
       <SummaryCard
         icon={<AddReactionOutlinedIcon />}
         title="New Hires"
         details={summary.new_hire}
         cardFooter={`Joined in the last 7 days`}
+        tone="violet"
       />
       <SummaryCard
         icon={<PendingActionsOutlinedIcon />}
         title="Pending accounts"
         details={summary.pending}
         cardFooter={`awaiting invitation or activation`}
+        tone="amber"
       />
-    </div>
+    </section>
   );
 }
 

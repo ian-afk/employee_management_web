@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 
 import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { dateformatter } from "../../utils/dateformatter";
+import { statusStyles } from "../../utils/color-palette";
 
 type EmployeeDetailsProps = {
   empId: string;
@@ -49,7 +50,12 @@ export default function EmployeeDetails({ empId }: EmployeeDetailsProps) {
                       <span>{emp.employee.job_title}</span>
                       <span>{emp.employee.department}</span>
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#e4f6ef] px-3 py-1.5 text-xs font-semibold text-[#168265]">
+                    <span
+                      className={`mt-4 inline-flex w-24 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${
+                        statusStyles[emp.employee.status] ??
+                        "bg-[#eef3fb] text-[#43506a] ring-[#d8e1ee]"
+                      }`}
+                    >
                       <span className="h-2 w-2 rounded-full bg-current" />
                       {emp.employee.status}
                     </span>

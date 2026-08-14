@@ -4,6 +4,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import type { Employee } from "../../../types/employee-type";
 import { dateformatter } from "../../../utils/dateformatter";
+import { statusStyles } from "../../../utils/color-palette";
 
 type EmployeeTableRowProp = {
   employee: Employee[] | [];
@@ -46,8 +47,14 @@ function EmployeeTableRow({ employee, setEmpId }: EmployeeTableRowProp) {
               {dateformatter(emp.createdAt)}
             </span>
           </td>
-          <td className="px-4 py-[18px]">
-            <span className="inline-flex rounded-full bg-[#eef3fb] px-2.5 py-1 text-[10px] font-extrabold text-[#43506a] ring-1 ring-inset ring-[#d8e1ee]">
+          <td className="px-2 py-[18px]">
+            <span
+              className={`inline-flex w-24 items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-extrabold ring-1 ring-inset ${
+                statusStyles[emp.status] ??
+                "bg-[#eef3fb] text-[#43506a] ring-[#d8e1ee]"
+              }`}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-current" />
               {emp.status}
             </span>
           </td>
