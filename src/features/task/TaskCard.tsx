@@ -33,10 +33,8 @@ function TaskCard({ onSetTaskId, task }: TaskCardProps) {
               </div>
               <div>
                 <div>
-                  {
-                    item?.taskAssignments[0]?.assignedByUser?.employee
-                      ?.firstName
-                  }
+                  {item?.taskAssignments[0]?.assignedByUser?.employee
+                    ?.firstName ?? ""}
                 </div>
                 <div>{item?.createdAt}</div>
               </div>

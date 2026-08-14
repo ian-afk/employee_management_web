@@ -24,7 +24,7 @@ function TaskStage({ onSetTaskId, stage, isAllTask }: TaskTableProps) {
     data: tasks = {
       messages: "",
       results: [],
-      pagination: { totalPages: 1 },
+      pagination: { totalPages: 1, totalItems: 0, currentPage: 0, nextPage: 0 },
     },
     isLoading,
     isError,
@@ -56,8 +56,6 @@ function TaskStage({ onSetTaskId, stage, isAllTask }: TaskTableProps) {
     setLimit((prev) => prev + 10);
   };
 
-  console.log(stage.status, tasks);
-
   return (
     <>
       <div>{stage.stage}</div>
@@ -69,6 +67,7 @@ function TaskStage({ onSetTaskId, stage, isAllTask }: TaskTableProps) {
         <>
           {taskResult ? (
             <>
+              <div>{tasks.pagination.totalItems}</div>
               <TaskCard onSetTaskId={onSetTaskId} task={tasks.results} />
               {tasks.pagination.totalPages > 1 && (
                 <button onClick={() => handleLoadMore}>Load more...</button>

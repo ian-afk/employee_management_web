@@ -24,6 +24,10 @@ function TaskDrawer({ onSetTaskId, taskId }: TaskDrawerProps) {
     return <div>Something went wrong</div>;
   }
   if (!data) <div>No record found</div>;
+
+  const assignedByUser = data?.task?.taskAssignments[0]?.assignedByUser ?? null;
+  const assignedToEmployee =
+    data?.task?.taskAssignments[0]?.assignedToEmployee ?? null;
   return (
     <>
       <div>
@@ -40,15 +44,15 @@ function TaskDrawer({ onSetTaskId, taskId }: TaskDrawerProps) {
           <div>
             <span>Assignee</span>
             <span>
-              {data?.task?.taskAssignments[0].assignedByUser.employee.firstName}
-              {data?.task?.taskAssignments[0].assignedByUser.employee.lastName}
+              {assignedByUser &&
+                `${assignedByUser.employee.firstName} ${assignedByUser?.employee.lastName}`}
             </span>
           </div>
           <div>
             <span>Assigned To</span>
             <span>
-              {data?.task?.taskAssignments[0].assignedToEmployee.firstName}
-              {data?.task?.taskAssignments[0].assignedToEmployee.lastName}
+              {assignedToEmployee &&
+                `${assignedToEmployee.firstName} ${assignedToEmployee.lastName}`}
             </span>
           </div>
           <div>
