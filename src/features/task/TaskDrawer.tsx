@@ -1,16 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import type { SetStateAction } from "react";
-import type React from "react";
 import { getTaskById } from "../../services/taskService";
 import { isUnAuthorizedError } from "../../services/authHelper";
 import { Navigate } from "react-router-dom";
 
 type TaskDrawerProps = {
-  onSetTaskId: React.Dispatch<SetStateAction<string>>;
   taskId: string;
 };
 
-function TaskDrawer({ onSetTaskId, taskId }: TaskDrawerProps) {
+function TaskDrawer({ taskId }: TaskDrawerProps) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["task", taskId],
     queryFn: async ({ signal }) => getTaskById(`task/${taskId}`, signal),
@@ -59,7 +56,6 @@ function TaskDrawer({ onSetTaskId, taskId }: TaskDrawerProps) {
             <span>Due at</span> <span>{data?.task.dueAt}</span>
           </div>
         </div>
-        <div>{<button onClick={() => onSetTaskId("")}>Close</button>}</div>
       </div>
     </>
   );

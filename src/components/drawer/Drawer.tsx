@@ -18,13 +18,13 @@ function Drawer({
         className="ml-auto flex h-full w-full max-w-[440px] flex-col bg-white shadow-xl"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="employee-drawer-title"
+        aria-labelledby="details-drawer-title"
       >
         <header className="flex items-center justify-between border-b border-[#dfe6f0] px-6 py-4">
           <div>
             <h2
               className="text-base font-bold text-[#172033]"
-              id="employee-drawer-title"
+              id="details-drawer-title"
             >
               {drawerHeader}
             </h2>
@@ -34,7 +34,7 @@ function Drawer({
             type="button"
             className="grid h-9 w-9 place-items-center rounded-lg text-[#647089] hover:bg-[#f1f4f8] hover:text-[#172033] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff]"
             onClick={() => onShowDetails("")}
-            aria-label="Close employee details"
+            aria-label="Close details"
           >
             <CloseIcon className="!h-5 !w-5" />
           </button>

@@ -18,7 +18,7 @@ function PageNav() {
   return (
     <aside
       className={[
-        "sticky top-0 z-30 flex h-screen shrink-0 flex-col border-r border-[#dfe6f0] bg-white py-5 text-[#172033]",
+        "relative z-30 flex h-full min-h-0 shrink-0 flex-col border-r border-[#dfe6f0] bg-white py-5 text-[#172033]",
         "transition-[width,padding] duration-300 ease-in-out",
         isExpanded ? "w-[248px] px-3" : "w-[88px] px-2",
       ].join(" ")}
