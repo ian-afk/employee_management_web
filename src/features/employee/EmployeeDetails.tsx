@@ -37,7 +37,7 @@ export default function EmployeeDetails({ empId }: EmployeeDetailsProps) {
         <>
           {emp ? (
             <>
-              <div className="flex-1 overflow-y-auto px-6 py-8">
+              <div className="px-6 py-8">
                 <section className="flex items-center gap-5 rounded-2xl bg-[#f7f9fc] p-6">
                   <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full bg-[#3562d4] text-white">
                     <PersonOutlineIcon className="!h-9 !w-9" />
