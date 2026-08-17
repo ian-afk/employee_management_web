@@ -2,9 +2,8 @@ import Task from "../features/task/Task";
 
 function TaskPage() {
   return (
-    <div>
+    <div className="h-full min-h-0 overflow-hidden">
       <Task />
-      <br />
     </div>
   );
 }
