@@ -1,6 +1,7 @@
 import type { ReactNode, SelectHTMLAttributes } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 import FormError from "./FormError";
+import type React from "react";
 
 type FormSelectProps<T> = Omit<
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -14,7 +15,7 @@ type FormSelectProps<T> = Omit<
   data: readonly T[];
   getOptionValue: (item: T) => string | number;
   getOptionLabel: (item: T) => ReactNode;
-  getOptionKey?: (item: T) => string | number;
+  getOptionKey?: (item: T) => React.Key | string | number;
 };
 
 function FormSelect<T>({
@@ -38,9 +39,10 @@ function FormSelect<T>({
         id={id}
         {...selectProps}
         {...registration}
+        defaultValue=""
         className="h-10 rounded-lg border border-[#d3dce9] bg-white px-3 text-sm text-[#172033] outline-none transition-colors hover:border-[#aebbd0] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           {placeHolder}
         </option>
         {data.map((item) => {

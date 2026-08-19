@@ -1,6 +1,10 @@
 import { apiClient } from "./apiClient";
 
-import type { TaskBaseResponse, TasksResponse } from "../types/task-type";
+import type {
+  TaskBaseResponse,
+  TaskFormValues,
+  TasksResponse,
+} from "../types/task-type";
 
 export const getTask = async (
   url: string,
@@ -32,5 +36,10 @@ export const getTaskById = async (
     signal,
   });
 
+  return res;
+};
+
+export const postTask = async (formData: TaskFormValues) => {
+  const res = await apiClient.post("task", formData);
   return res;
 };
