@@ -5,6 +5,7 @@ import FormLabel from "./FormLabel";
 type FormInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "id"> & {
   id: string;
   label: string;
+  placeholder: string;
   registration: UseFormRegisterReturn;
   error?: string;
 };
@@ -13,6 +14,7 @@ function FormInput({
   id,
   label,
   type,
+  placeholder,
   registration,
   error,
   ...inputProps
@@ -26,6 +28,7 @@ function FormInput({
         {...registration}
         {...inputProps}
         className="h-10 rounded-lg border border-[#d3dce9] bg-white px-3 text-sm text-[#172033] outline-none transition-colors hover:border-[#aebbd0] focus:border-[#2f66e8] focus:ring-2 focus:ring-[#dce7ff]"
+        placeholder={placeholder}
       />
       {error && <FormError err={error} />}
     </div>

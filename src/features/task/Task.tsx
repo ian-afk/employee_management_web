@@ -4,6 +4,7 @@ import TaskDrawer from "./TaskDrawer";
 import TaskStage from "./TaskStage";
 import Drawer from "../../components/drawer/Drawer";
 import TaskCreateDialog from "./create/TaskCreateDialog";
+import AddIcon from "@mui/icons-material/Add";
 
 function Task() {
   const [taskId, setTaskId] = useState("");
@@ -34,17 +35,27 @@ function Task() {
 
   return (
     <div className="flex h-full min-h-0 min-w-0 flex-col gap-6 overflow-hidden p-6 lg:p-8">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
-          Work Management
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-[#172033]">Tasks</h1>
-        <p className="mt-1 text-sm text-[#647089]">
-          Assign work, balance team capacity, track changes, and move
-          delivirables through review
-        </p>
-        <button onClick={() => setShowModal(true)}>Add Task</button>
-      </div>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
+            Work Management
+          </p>
+          <h1 className="mt-1 text-2xl font-bold text-[#172033]">Tasks</h1>
+          <p className="mt-1 text-sm text-[#647089]">
+            Assign work, balance team capacity, track changes, and move
+            delivirables through review
+          </p>
+        </div>
+        <button
+          type="button"
+          className="inline-flex h-10 items-center justify-center gap-2 self-start rounded-lg bg-[#2f66e8] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#2858c9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] focus-visible:ring-offset-2 sm:self-auto"
+          onClick={() => setShowModal(!showModal)}
+          aria-haspopup="dialog"
+        >
+          <AddIcon className="!h-5 !w-5" />
+          Add task
+        </button>
+      </header>
       <div
         className="inline-flex w-fit rounded-lg border border-[#dfe6f0] bg-white p-1"
         role="group"
