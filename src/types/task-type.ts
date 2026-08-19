@@ -91,3 +91,12 @@ export type Pagination = {
   previousPage: number | null;
   nextPage: number | null;
 };
+
+export type TaskFormValues = {
+  title: string;
+  description: string;
+  dueAt: Date;
+  priority: PriorityStatus;
+};
+
+type PriorityStatus = "SHOWSTOPPER" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";

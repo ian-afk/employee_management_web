@@ -3,10 +3,12 @@ import TaskDrawer from "./TaskDrawer";
 
 import TaskStage from "./TaskStage";
 import Drawer from "../../components/drawer/Drawer";
+import TaskCreateDialog from "./create/TaskCreateDialog";
 
 function Task() {
   const [taskId, setTaskId] = useState("");
   const [isAllTask, setIsAllTask] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const stages = [
     {
       stage: "Task",
@@ -41,6 +43,7 @@ function Task() {
           Assign work, balance team capacity, track changes, and move
           delivirables through review
         </p>
+        <button onClick={() => setShowModal(true)}>Add Task</button>
       </div>
       <div
         className="inline-flex w-fit rounded-lg border border-[#dfe6f0] bg-white p-1"
@@ -98,6 +101,7 @@ function Task() {
           <TaskDrawer taskId={taskId} />
         </Drawer>
       )}
+      {showModal && <TaskCreateDialog onSetShowModal={setShowModal} />}
     </div>
   );
 }
