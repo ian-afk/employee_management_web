@@ -55,7 +55,7 @@ function TaskDrawer({ taskId }: TaskDrawerProps) {
       <section className="rounded-2xl border border-[#dfe6f0] bg-[#f8fafd] p-5">
         <span className="inline-flex max-w-full rounded-md bg-[#e8efff] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.06em] text-[#2f66e8]">
           <span className="truncate">
-            {data.task.assignedDepartment ?? "No department"}
+            {data.task.assignedDepartment?.departmentName ?? "No department"}
           </span>
         </span>
         <h3 className="mt-4 [overflow-wrap:anywhere] text-xl font-bold leading-7 text-[#172033]">
@@ -73,15 +73,6 @@ function TaskDrawer({ taskId }: TaskDrawerProps) {
         assignedToEmployee={assignedToEmployee}
         assignedByName={assignedByName}
       />
-
-      <section className="mt-7 rounded-xl bg-[#f8fafd] p-4">
-        <p className="text-[10px] font-bold uppercase tracking-[0.07em] text-[#71809d]">
-          Task ID
-        </p>
-        <p className="mt-1 break-all font-mono text-xs text-[#536078]">
-          {data.task.id}
-        </p>
-      </section>
     </article>
   );
 }
