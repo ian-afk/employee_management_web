@@ -5,6 +5,7 @@ import { useAddEmployee } from "./useAddEmployee";
 import { useQuery } from "@tanstack/react-query";
 import { getTeamLead } from "../../../services/userService";
 import FormSelect from "../../../components/form/FormSelect";
+import { useGetDepartment } from "../../../hooks/useGetDepartment";
 
 type EmployeeFormProps = {
   onSetShowModal: React.Dispatch<SetStateAction<boolean>>;
@@ -25,7 +26,12 @@ type EmployeeFormValues = {
 function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
   const { mutate: addEmployee, isPending } = useAddEmployee();
   const { register, formState, handleSubmit, reset } =
-    useForm<EmployeeFormValues>();
+    useForm<EmployeeFormValues>({
+      defaultValues: {
+        department: "",
+        teamLead: "",
+      },
+    });
   const { errors } = formState;
 
   const {
@@ -37,6 +43,12 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
     queryKey: ["users"],
     queryFn: () => getTeamLead({ role: "TEAM LEAD" }),
   });
+
+  const {
+    data,
+    isLoading: isDeptLoading,
+    isError: isDeptError,
+  } = useGetDepartment();
 
   const handleCancel = () => {
     onSetShowModal(false);
@@ -50,7 +62,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
         age: Number(data.age),
         dob: data.dob,
         jobTitle: data.jobTitle,
-        department: data.department,
+        departmentId: data.department,
         teamLeadId: data.teamLead,
         scheduleTimeIn: data.scheduleTimeIn,
         scheduleTimeOut: data.scheduleTimeOut,
@@ -65,15 +77,16 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
       className="flex min-h-0 flex-1 flex-col"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex-1 overflow-y-auto px-6 py-6">
-        <section>
-          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
+      <div className="flex-1 space-y-5 overflow-y-auto bg-[#f7f9fc] px-6 py-6 sm:px-7">
+        <section className="rounded-xl border border-[#e2e8f1] bg-white p-5 shadow-[0_4px_14px_rgba(23,32,51,0.03)]">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#43506a]">
             Personal details
           </h3>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <FormInput
               id="firstName"
               label="First name *"
+              placeholder="John"
               registration={register("firstName", {
                 required: "First name is required",
               })}
@@ -83,6 +96,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
             <FormInput
               id="lastName"
               label="Last name *"
+              placeholder="Manuel"
               registration={register("lastName", {
                 required: "Last name is required",
               })}
@@ -92,6 +106,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
             <FormInput
               id="age"
               label="Age *"
+              placeholder="Employee age"
               min={19}
               registration={register("age", {
                 required: "Age is required",
@@ -102,6 +117,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
             <FormInput
               id="dob"
               label="Date of birth *"
+              placeholder="MM/DD/YYYY"
               registration={register("dob", {
                 required: "Date of birth is required",
               })}
@@ -111,29 +127,57 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
           </div>
         </section>
 
-        <section className="mt-7 border-t border-[#edf1f6] pt-6">
-          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
+        <section className="rounded-xl border border-[#e2e8f1] bg-white p-5 shadow-[0_4px_14px_rgba(23,32,51,0.03)]">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#43506a]">
             Work assignment
           </h3>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <FormInput
-              id="jobtitle"
-              label="Job title *"
-              registration={register("jobTitle", {
-                required: "Job title is required",
-              })}
-              type="text"
-              error={errors.jobTitle?.message}
-            />
-            <FormInput
-              id="department"
-              label="Department *"
-              registration={register("department", {
-                required: "Department field is required",
-              })}
-              type="text"
-              error={errors.department?.message}
-            />
+            <div className="sm:col-span-2">
+              <FormInput
+                id="jobtitle"
+                label="Job title *"
+                placeholder="Product designer"
+                registration={register("jobTitle", {
+                  required: "Job title is required",
+                })}
+                type="text"
+                error={errors.jobTitle?.message}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              {isDeptLoading ? (
+                <div className="rounded-lg border border-[#dfe6f0] bg-[#f8fafd] px-4 py-3 text-sm text-[#647089]">
+                  Loading..
+                </div>
+              ) : isDeptError ? (
+                <div className="flex items-center justify-between gap-3 rounded-lg border border-[#eccaca] bg-[#fff6f6] px-4 py-3 text-sm text-[#a23c3c]">
+                  <span>Unable to load Department</span>
+                  <button
+                    type="button"
+                    className="rounded-md border border-[#dfb5b5] bg-white px-3 py-1.5 text-xs font-semibold hover:bg-[#fffafa]"
+                    onClick={() => refetch()}
+                  >
+                    Retry
+                  </button>
+                </div>
+              ) : (
+                <FormSelect
+                  id="department"
+                  placeHolder="Select a Department"
+                  label="Department *"
+                  data={data?.results ?? []}
+                  registration={register("department", {
+                    required: "Department field is required",
+                  })}
+                  error={errors.department?.message}
+                  getOptionKey={(item) => item.id}
+                  getOptionLabel={(item) =>
+                    `${item.departmentCode} - ${item.departmentName}`
+                  }
+                  getOptionValue={(item) => item.id}
+                />
+              )}
+            </div>
 
             <div className="sm:col-span-2">
               {isLoading ? (
@@ -173,14 +217,15 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
           </div>
         </section>
 
-        <section className="mt-7 border-t border-[#edf1f6] pt-6">
-          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
+        <section className="rounded-xl border border-[#e2e8f1] bg-white p-5 shadow-[0_4px_14px_rgba(23,32,51,0.03)]">
+          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.08em] text-[#43506a]">
             Work schedule
           </h3>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <FormInput
               id="scheduletimein"
               label="Schedule time in *"
+              placeholder="HH:MM 24 hour time"
               registration={register("scheduleTimeIn", {
                 required: "Schedule time in is required",
               })}
@@ -191,6 +236,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
             <FormInput
               id="scheduletimeout"
               label="Schedule time out *"
+              placeholder="HH:MM 24 hour time"
               registration={register("scheduleTimeOut", {
                 required: "Schedule time out is required",
               })}
@@ -202,10 +248,10 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
         </section>
       </div>
 
-      <footer className="flex justify-end gap-3 border-t border-[#dfe6f0] bg-white px-6 py-4">
+      <footer className="flex shrink-0 justify-end gap-3 border-t border-[#dfe6f0] bg-white px-6 py-4 shadow-[0_-8px_20px_rgba(23,32,51,0.04)] sm:px-7">
         <button
           type="button"
-          className="h-10 rounded-lg border border-[#d3dce9] bg-white px-5 text-sm font-semibold text-[#43506a] hover:bg-[#f4f7fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-10 flex-1 rounded-lg border border-[#d3dce9] bg-white px-5 text-sm font-semibold text-[#43506a] transition-colors hover:bg-[#f4f7fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
           onClick={handleCancel}
           disabled={isPending}
         >
@@ -213,7 +259,7 @@ function EmployeeForm({ onSetShowModal }: EmployeeFormProps) {
         </button>
         <button
           type="submit"
-          className="h-10 rounded-lg bg-[#2f66e8] px-5 text-sm font-semibold text-white hover:bg-[#2858c9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-10 flex-1 rounded-lg bg-[#2f66e8] px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#2858c9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
           disabled={isPending}
         >
           Save
