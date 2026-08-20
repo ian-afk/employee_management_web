@@ -11,6 +11,7 @@ type TaskFormValues = {
   dueAt: Date;
   priority: PriorityStatus;
   assignedDepartment: string;
+  initialStatus: "TODO" | "IN PROGRESS";
 };
 
 type PriorityStatus = (typeof priorityStatus)[number];
@@ -38,8 +39,10 @@ function TaskForm({ onSetShowModal }: TaskFormProps) {
     isError: isDeptError,
     refetch,
   } = useGetDepartment();
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
   function onSubmit(data: TaskFormValues) {
     addTask(
       {
@@ -47,9 +50,14 @@ function TaskForm({ onSetShowModal }: TaskFormProps) {
         description: data.description,
         dueAt: data.dueAt,
         priority: data.priority,
+        assignedDepartmentId: data.assignedDepartment,
+        status: data.initialStatus,
       },
       {
-        onSettled: () => reset(),
+        onSettled: () => {
+          reset();
+          onSetShowModal(false);
+        },
       },
     );
   }
@@ -58,13 +66,14 @@ function TaskForm({ onSetShowModal }: TaskFormProps) {
     reset();
     onSetShowModal(false);
   };
+
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex min-h-0 flex-1 flex-col"
       >
-        <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="flex-1 overflow-y-auto px-6 py-6 gap-5 space-y-3">
           <FormInput
             id="taskTitle"
             label="Task title"
@@ -146,6 +155,21 @@ function TaskForm({ onSetShowModal }: TaskFormProps) {
                 getOptionValue={(item) => item.id}
               />
             )}
+          </div>
+          <div className="sm:col-span-2">
+            <FormSelect
+              id="initialStatus"
+              placeHolder="Select Initial status"
+              label="Initial Status *"
+              data={["TODO", "IN PROGRESS"]}
+              registration={register("initialStatus", {
+                required: "Initial Status field is required",
+              })}
+              error={errors.initialStatus?.message}
+              getOptionKey={(item) => item}
+              getOptionLabel={(item) => `${item}`}
+              getOptionValue={(item) => item}
+            />
           </div>
         </div>
 

@@ -33,7 +33,11 @@ export type TaskBase = {
 
   createdByUserId: string;
 
-  assignedDepartment: string | null;
+  assignedDepartment: {
+    id: string;
+    departmentCode: string;
+    departmentName: string;
+  } | null;
 
   isDeleted: boolean;
   deletedAt: string | null;
@@ -97,6 +101,8 @@ export type TaskFormValues = {
   description: string;
   dueAt: Date;
   priority: PriorityStatus;
+  assignedDepartmentId: string;
+  status: string;
 };
 
 type PriorityStatus = "SHOWSTOPPER" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
