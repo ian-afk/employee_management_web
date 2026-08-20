@@ -62,7 +62,7 @@ export type EmployeeFormValues = {
   age: number;
   dob: string;
   jobTitle: string;
-  department: string;
+  departmentId: string;
   teamLeadId: string;
   scheduleTimeIn: string;
   scheduleTimeOut: string;

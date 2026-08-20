@@ -6,8 +6,7 @@ import toast from "react-hot-toast";
 export function useAddEmployee() {
   return useMutation({
     mutationFn: postEmployee,
-    onSuccess: (emp) => {
-      console.log(emp);
+    onSuccess: () => {
       toast.success("Employee created successfully");
     },
   });
