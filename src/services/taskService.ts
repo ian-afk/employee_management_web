@@ -4,6 +4,7 @@ import type {
   TaskBaseResponse,
   TaskFormValues,
   TasksResponse,
+  TaskStatus,
 } from "../types/task-type";
 
 export const getTask = async (
@@ -41,5 +42,12 @@ export const getTaskById = async (
 
 export const postTask = async (formData: TaskFormValues) => {
   const res = await apiClient.post("task", formData);
+  return res;
+};
+
+export const updateTaskStatus = async (status: TaskStatus, taskId: string) => {
+  const res = await apiClient.patch(`task/${taskId}`, {
+    status,
+  });
   return res;
 };

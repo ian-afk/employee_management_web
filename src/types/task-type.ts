@@ -106,3 +106,17 @@ export type TaskFormValues = {
 };
 
 type PriorityStatus = "SHOWSTOPPER" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+
+export type TaskColumnId =
+  | "todo"
+  | "inprogress"
+  | "done"
+  | "inreview"
+  | "cancelled";
+
+export type TaskStatus =
+  | "TODO"
+  | "IN PROGRESS"
+  | "IN REVIEW"
+  | "DONE"
+  | "CANCELLED";

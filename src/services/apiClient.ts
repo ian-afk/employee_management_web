@@ -58,4 +58,12 @@ export const apiClient = {
     const res = await client.post(`/${query}`, body, config);
     return res.data;
   },
+  patch: async <TResponse, TBody = unknown>(
+    query: string,
+    body?: TBody,
+    config?: AxiosRequestConfig,
+  ): Promise<TResponse> => {
+    const res = await client.patch(`/${query}`, body, config);
+    return res.data;
+  },
 };
