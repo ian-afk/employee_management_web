@@ -1,37 +1,16 @@
 import { useState } from "react";
 import TaskDrawer from "./TaskDrawer";
 
-import TaskStage from "./TaskStage";
 import Drawer from "../../components/drawer/Drawer";
 import TaskCreateDialog from "./create/TaskCreateDialog";
 import AddIcon from "@mui/icons-material/Add";
+
+import TaskStage from "./TaskStage";
 
 function Task() {
   const [taskId, setTaskId] = useState("");
   const [isAllTask, setIsAllTask] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const stages = [
-    {
-      stage: "Task",
-      status: "TODO",
-    },
-    {
-      stage: "In progress",
-      status: "IN PROGRESS",
-    },
-    {
-      stage: "In review",
-      status: "IN REVIEW",
-    },
-    {
-      stage: "Done",
-      status: "DONE",
-    },
-    {
-      stage: "Cancelled",
-      status: "CANCELLED",
-    },
-  ];
 
   return (
     <div className="flex h-full min-h-0 min-w-0 flex-col gap-6 overflow-hidden p-6 lg:p-8">
@@ -92,17 +71,9 @@ function Task() {
         tabIndex={0}
       >
         <div className="grid h-full w-full min-w-[1348px] grid-cols-5 gap-3">
-          {stages.map((task) => (
-            <TaskStage
-              onSetTaskId={setTaskId}
-              isAllTask={isAllTask}
-              stage={task}
-              key={task.stage}
-            />
-          ))}
+          <TaskStage isAllTask={isAllTask} onSetTaskId={setTaskId} />
         </div>
       </div>
-
       {taskId && (
         <Drawer
           onShowDetails={setTaskId}
