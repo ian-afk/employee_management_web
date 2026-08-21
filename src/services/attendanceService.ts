@@ -1,4 +1,7 @@
-import type { AttendanceResponse } from "../types/attendance-type";
+import type {
+  AttendanceResponse,
+  AttendanceRetrieveResponse,
+} from "../types/attendance-type";
 import { apiClient } from "./apiClient";
 
 export const getAttendance = async (
@@ -14,6 +17,18 @@ export const getAttendance = async (
       page: query.page,
       limit: query.limit,
     },
+    signal: query.signal,
+  });
+  return res;
+};
+
+export const getAttendanceById = async (
+  url: string,
+  query: {
+    signal?: AbortSignal;
+  },
+): Promise<AttendanceRetrieveResponse> => {
+  const res: AttendanceRetrieveResponse = await apiClient.get(`${url}`, {
     signal: query.signal,
   });
   return res;

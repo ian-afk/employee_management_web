@@ -1,7 +1,9 @@
 import { useState } from "react";
-import AttendanceDrawer from "./AttendanceDrawer";
+
 import AttendanceTable from "./table/AttendanceTable";
 import AttendanceHeader from "./AttendanceHeader";
+import AttendanceDetails from "./AttendanceDetails";
+import Drawer from "../../components/drawer/Drawer";
 
 function Attendance() {
   const [attendanceId, setAttendanceId] = useState("");
@@ -10,10 +12,13 @@ function Attendance() {
       <AttendanceHeader />
       <AttendanceTable onSetAttendanceId={setAttendanceId} />
       {attendanceId && (
-        <AttendanceDrawer
-          onSetAttendanceId={setAttendanceId}
-          attendanceId={attendanceId}
-        />
+        <Drawer
+          onShowDetails={setAttendanceId}
+          drawerHeader="Attendance Details"
+          drawerInformation="Attendance Information"
+        >
+          <AttendanceDetails attendanceId={attendanceId} />
+        </Drawer>
       )}
     </div>
   );
