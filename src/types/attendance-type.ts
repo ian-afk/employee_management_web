@@ -1,5 +1,5 @@
 export type AttendanceRetrieveResponse = {
-  attendance: AttendanceResponse;
+  attendance: AttendanceResult;
   message: string;
   status: "success" | string;
 };
@@ -35,7 +35,7 @@ export type Employee = {
   firstName: string;
   middleName: string;
   lastName: string;
-
+  empId: string;
   age: string;
   dob: string;
 
