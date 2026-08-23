@@ -1,4 +1,5 @@
 import { useDroppable } from "@dnd-kit/react";
+import { closestCorners } from "@dnd-kit/collision";
 import TaskCard from "./TaskCard";
 
 import { isUnAuthorizedError } from "../../services/authHelper";
@@ -26,7 +27,10 @@ function TaskColumn({
   stage,
   onSetTaskId,
 }: TaskColumnProps) {
-  const { ref } = useDroppable({ id });
+  const { ref, isDropTarget } = useDroppable({
+    id,
+    collisionDetector: closestCorners,
+  });
 
   const assigned = isAllTask ? undefined : "me";
   const {
@@ -79,28 +83,38 @@ function TaskColumn({
           {tasks.pages[0].pagination.totalItems}
         </span>
       </header>
-      <div className="min-h-0 min-w-0 max-w-full flex-1 overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg border border-dashed border-[#dfe6f0] bg-white/40 p-2 [scrollbar-gutter:stable]">
+      <div
+        ref={ref}
+        className={`flex min-h-0 min-w-0 max-w-full flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-contain rounded-lg p-2 transition-[background-color,box-shadow] duration-200 [scrollbar-gutter:stable] ${
+          isDropTarget
+            ? "bg-[#edf3ff] shadow-[inset_0_0_0_2px_#c8d8fb]"
+            : "bg-[#f4f7fb]"
+        }`}
+      >
         {initialState ? (
           <div>Loading...</div>
         ) : (
           <>
-            <div ref={ref} id={id} className="min-h-[150px] flex-1">
+            <div className="min-h-full flex-1 space-y-2">
               {taskResults.map((task) => (
                 <TaskCard task={task} key={task.id} onSetTaskId={onSetTaskId} />
               ))}
+              {hasNextPage && (
+                <div className="flex justify-end pt-1">
+                  <button
+                    className="rounded-md px-2 py-1 text-xs font-semibold text-[#2f66e8] transition-colors hover:bg-[#e4edff] disabled:cursor-not-allowed disabled:opacity-60"
+                    onClick={() => handleLoadMore()}
+                    disabled={!hasNextPage || isFetchingNextPage}
+                  >
+                    {isFetchingNextPage
+                      ? "Loading"
+                      : hasNextPage
+                        ? "Load more..."
+                        : "No more records"}
+                  </button>
+                </div>
+              )}
             </div>
-            {hasNextPage && (
-              <button
-                onClick={() => handleLoadMore()}
-                disabled={!hasNextPage || isFetchingNextPage}
-              >
-                {isFetchingNextPage
-                  ? "Loading"
-                  : hasNextPage
-                    ? "Load more..."
-                    : "No more records"}
-              </button>
-            )}
           </>
         )}
       </div>
