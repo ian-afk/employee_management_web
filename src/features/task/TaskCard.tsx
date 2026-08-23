@@ -11,14 +11,18 @@ type TaskCardProps = {
 };
 
 function TaskCard({ task, onSetTaskId }: TaskCardProps) {
-  const { ref } = useDraggable({ id: task.id });
+  const { ref, isDragging } = useDraggable({ id: task.id });
   const assignedByFirstName =
     task.taskAssignments[0]?.assignedByUser?.employee?.firstName ?? "";
   return (
     <div ref={ref}>
       <div className="flex w-full min-w-0 max-w-full flex-col gap-3 pr-1">
         <div
-          className="w-full min-w-0 max-w-full shrink-0 cursor-pointer overflow-hidden rounded-xl border border-[#dfe6f0] bg-white p-3 shadow-[0_5px_15px_rgba(23,32,51,0.03)] transition-[border-color,box-shadow] duration-200 hover:border-[#b9c9e4] hover:shadow-[0_8px_20px_rgba(23,32,51,0.07)]"
+          className={`w-full min-w-0 max-w-full shrink-0 cursor-grab overflow-hidden rounded-xl border bg-white p-3 transition-[border-color,box-shadow,transform] duration-200 active:cursor-grabbing ${
+            isDragging
+              ? "relative z-20 scale-[1.015] cursor-grabbing border-[#8eacef] shadow-[0_18px_42px_rgba(23,32,51,0.22),0_4px_12px_rgba(47,102,232,0.14)] ring-2 ring-[#dce7ff]"
+              : "border-[#dfe6f0] shadow-[0_5px_15px_rgba(23,32,51,0.03)] hover:border-[#b9c9e4] hover:shadow-[0_8px_20px_rgba(23,32,51,0.07)]"
+          }`}
           onClick={() => {
             onSetTaskId(task.id);
           }}
