@@ -15,6 +15,14 @@ export const statusTaskStyles: Record<string, string> = {
   DONE: "bg-[#e4f6ef] text-[#168265] ring-[#bfe7d8]",
   CANCELLED: "bg-[#ffeded] text-[#b53d3d] ring-[#edbcbc]",
 };
+
+export const attendanceStatusStyles: Record<string, string> = {
+  PRESENT: "bg-[#e4f6ef] text-[#168265] ring-[#bfe7d8]",
+  LATE: "bg-[#fff5df] text-[#9a6400] ring-[#efd79f]",
+  ABSENT: "bg-[#ffeded] text-[#b53d3d] ring-[#edbcbc]",
+  "ON LEAVE": "bg-[#f1efff] text-[#6755b8] ring-[#d3cff4]",
+};
+
 export const priorityStyles: Record<string, string> = {
   LOW: "bg-[#eef3fb] text-[#536078] ring-[#d8e1ee]",
   MEDIUM: "bg-[#fff5df] text-[#9a6400] ring-[#efd79f]",

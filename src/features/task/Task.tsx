@@ -13,7 +13,7 @@ function Task() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="flex h-full min-h-0 min-w-0 flex-col gap-6 overflow-hidden p-6 lg:p-8">
+    <div className="flex h-full min-h-0 min-w-0 flex-col gap-6 overflow-hidden p-6 lg:p-4">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#647089]">
