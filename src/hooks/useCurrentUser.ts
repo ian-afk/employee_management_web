@@ -5,6 +5,9 @@ export type AuthUser = {
   id: string;
   email: string;
   role: string;
+  employeeId: string;
+  attendanceId: string | null;
+  clockedIn: string | null;
 };
 
 export function useCurrentUser() {
