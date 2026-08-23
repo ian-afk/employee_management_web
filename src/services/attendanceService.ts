@@ -33,3 +33,15 @@ export const getAttendanceById = async (
   });
   return res;
 };
+
+export const clockInOutAttendance = async (
+  url: string,
+  empCode: string,
+  id?: string | null,
+): Promise<AttendanceRetrieveResponse> => {
+  const res: AttendanceRetrieveResponse = await apiClient.post(`${url}`, {
+    id,
+    empCode,
+  });
+  return res;
+};
