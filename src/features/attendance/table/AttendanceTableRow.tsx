@@ -5,6 +5,7 @@ import type { AttendanceResult } from "../../../types/attendance-type";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { attendanceStatusStyles } from "../../../utils/color-palette";
 
 type AttendanceRowProp = {
   onSetAttendanceId: React.Dispatch<SetStateAction<string>>;
@@ -60,8 +61,16 @@ function AttendanceRow({ onSetAttendanceId, attendance }: AttendanceRowProp) {
                 {att.timeOut ? finalHours : ""}
               </span>
             </td>
-            <td className="px-6 py-[18px]">
-              <span className="block truncate">{att.status}</span>
+            <td className="px-2 py-[18px]">
+              <span
+                className={`inline-flex w-24 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-extrabold ring-1 ring-inset ${
+                  attendanceStatusStyles[att.status] ??
+                  "bg-[#eef3fb] text-[#43506a] ring-[#d8e1ee]"
+                }`}
+              >
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
+                {att.status}
+              </span>
             </td>
             <td className="px-4 py-[18px]">
               <div

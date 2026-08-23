@@ -11,7 +11,7 @@ function Attendance() {
   const [attendanceId, setAttendanceId] = useState("");
 
   return (
-    <div className="flex min-h-full flex-col gap-[18px] p-4 sm:p-6 lg:p-8">
+    <div className="flex min-h-full flex-col gap-[18px] p-4 sm:p-6 lg:p-4">
       <AttendanceHeader />
       <section
         className="grid items-stretch gap-[18px] xl:grid-cols-[minmax(0,1.55fr)_minmax(300px,0.75fr)]"

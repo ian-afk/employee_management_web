@@ -28,8 +28,8 @@ function AttendanceTableSkeleton() {
           <td className="px-6 py-[18px]">
             <SkeletonBar className="w-1/2 max-w-16" />
           </td>
-          <td className="px-6 py-[18px]">
-            <div className="h-6 w-16 max-w-full rounded-full bg-[#e8edf4]" />
+          <td className="px-2 py-[18px]">
+            <div className="h-6 w-24 max-w-full rounded-full bg-[#e8edf4]" />
           </td>
           <td className="px-4 py-[18px]">
             <div className="flex gap-1">

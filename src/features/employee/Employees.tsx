@@ -10,7 +10,7 @@ export default function Employees() {
   const [empId, setEmpId] = useState("");
   const [showModal, setShowModal] = useState(false);
   return (
-    <div className="flex flex-col gap-6 p-6 lg:p-8">
+    <div className="flex flex-col gap-6 p-6 lg:p-4">
       <EmployeeHeader onSetShowModal={setShowModal} showModal={showModal} />
       <EmployeeSummary />
       <EmployeeTable setEmpId={setEmpId} />
