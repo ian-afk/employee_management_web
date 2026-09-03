@@ -3,6 +3,8 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
+
 import { NavLink } from "react-router-dom";
 
 type PageNavMenuProps = {
@@ -31,6 +33,11 @@ function PageNavMenu({ isExpanded }: PageNavMenuProps) {
       label: "Attendance",
       path: "/attendance",
       icon: AccessTimeOutlinedIcon,
+    },
+    {
+      label: "Roles & RBAC",
+      path: "/rbac",
+      icon: VerifiedUserOutlinedIcon,
     },
   ];
 

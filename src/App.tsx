@@ -9,6 +9,7 @@ import EmployeePage from "./pages/EmployeePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TaskPage from "./pages/TaskPage";
 import AttendancePage from "./pages/AttendancePage";
+import RoleBasedAccessControlPage from "./pages/RoleBasedAccessControlPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="employee" element={<EmployeePage />} />
             <Route path="task" element={<TaskPage />} />
             <Route path="attendance" element={<AttendancePage />} />
+            <Route path="rbac" element={<RoleBasedAccessControlPage />} />
           </Route>
           <Route path="*" element={<PageNoutFound />} />
         </Routes>
