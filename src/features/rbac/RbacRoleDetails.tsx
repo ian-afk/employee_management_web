@@ -1,3 +1,9 @@
+import RbacSuperAdmin from "./overview/RbacSuperAdmin";
+import RbacAdmin from "./overview/RbacAdmin";
+import RbacHr from "./overview/RbacHr";
+import RbacTeamLead from "./overview/RbacTeamLead";
+import RbacEmployee from "./overview/RbacEmployee";
+
 type RbacRoleDetailsProps = {
   roleCode: string | null | undefined;
 };
@@ -6,23 +12,23 @@ function RbacRoleDetails({ roleCode }: RbacRoleDetailsProps) {
   const roleDetails = [
     {
       code: "SUPER_ADMIN",
-      details: <div>SUPERADMIN</div>,
+      details: <RbacSuperAdmin />,
     },
     {
       code: "ADMIN",
-      details: <div>ADMIN</div>,
+      details: <RbacAdmin />,
     },
     {
       code: "HR",
-      details: <div>HR</div>,
+      details: <RbacHr />,
     },
     {
       code: "TEAM_LEAD",
-      details: <div>TEAM LEAD</div>,
+      details: <RbacTeamLead />,
     },
     {
       code: "EMPLOYEE",
-      details: <div>employee</div>,
+      details: <RbacEmployee />,
     },
   ];
 
