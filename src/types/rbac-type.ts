@@ -51,3 +51,33 @@ export type PermissionMatrixResponse = {
   message: string;
   status: "success";
 };
+
+type UserStatus = "ACTIVE";
+
+export interface UserByRole {
+  user_id: string;
+  user_email: string;
+  user_status: UserStatus;
+  user_createdByUserId: string | null;
+  user_activatedAt: string | null;
+  user_passwordChangedAt: string | null;
+  user_createdAt: string;
+  user_updatedAt: string;
+  user_employeeId: string;
+
+  emp_id: string;
+  emp_firstName: string;
+  emp_lastName: string;
+
+  userrole_id: string;
+
+  role_id: string;
+  role_roleCode: string;
+  role_roleName: string;
+}
+
+export interface UserByRoleResponse {
+  message: string;
+  status: "success";
+  user: UserByRole[];
+}

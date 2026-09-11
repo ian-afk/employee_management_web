@@ -6,6 +6,7 @@ import type { Role } from "../../types/rbac-type";
 import PermissionMatrixTab from "./permissionmatrix/PermissionMatrixTab";
 import { useQuery } from "@tanstack/react-query";
 import { getRolesById } from "../../services/rbacService";
+import MembersTab from "./members/MembersTab";
 
 type RbacRoleDetailsProps = {
   role: Role;
@@ -23,7 +24,7 @@ function RbacRoleDetails({ role }: RbacRoleDetailsProps) {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>error</div>;
 
-  console.log(data);
+  const roleId = role.roleId;
 
   return (
     <div>
@@ -39,7 +40,7 @@ function RbacRoleDetails({ role }: RbacRoleDetailsProps) {
           permissions={data.groupedModule}
         />
       )}
-      {tab === "members" && <OverviewTabDetails />}
+      {tab === "members" && <MembersTab roleId={roleId} />}
     </div>
   );
 }
