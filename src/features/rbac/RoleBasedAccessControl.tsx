@@ -3,6 +3,7 @@ import { getRoles } from "../../services/rbacService";
 import { useState } from "react";
 import RbacRoleDetails from "./RbacRoleDetails";
 import type { Role } from "../../types/rbac-type";
+import RbacRoleMenus from "./RbacRoleMenus";
 
 function RoleBasedAccessControl() {
   const [selectRole, setSelectRole] = useState<Role | null>();
@@ -37,17 +38,11 @@ function RoleBasedAccessControl() {
           ) : (
             <div className="flex flex-col gap-4">
               {roleResults.map((role) => (
-                <div
+                <RbacRoleMenus
                   key={role.roleId}
-                  onClick={() => setSelectRole(role)}
-                  className="border-2 border-solid border-violet-600 p-4"
-                >
-                  <span>{role.roleCode}</span>
-                  <br />
-                  <span>{role.roleName}</span>
-                  <br />
-                  <span>{role.userCount}</span>
-                </div>
+                  onSelectRole={setSelectRole}
+                  role={role}
+                />
               ))}
             </div>
           )}

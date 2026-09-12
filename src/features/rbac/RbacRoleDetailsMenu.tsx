@@ -20,9 +20,13 @@ type RbacRoleMenuProps = {
 
 function RbacRoleDetailsMenu({ onSetTab }: RbacRoleMenuProps) {
   return (
-    <div>
+    <div className="flex gap-4">
       {menuTab.map((tab) => (
-        <button key={tab.tab} onClick={() => onSetTab(tab.tab)}>
+        <button
+          key={tab.tab}
+          onClick={() => onSetTab(tab.tab)}
+          className="border-2 border-solid border-red-500 px-4 py-2"
+        >
           {tab.label}
         </button>
       ))}
