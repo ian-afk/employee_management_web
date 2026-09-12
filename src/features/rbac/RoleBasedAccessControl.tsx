@@ -4,6 +4,7 @@ import { useState } from "react";
 import RbacRoleDetails from "./RbacRoleDetails";
 import type { Role } from "../../types/rbac-type";
 import RbacRoleMenus from "./RbacRoleMenus";
+import RbacHeader from "./RbacHeader";
 
 function RoleBasedAccessControl() {
   const [selectRole, setSelectRole] = useState<Role | null>();
@@ -29,8 +30,8 @@ function RoleBasedAccessControl() {
 
   const roleResults = role.results;
   return (
-    <div>
-      <h2>Rbac</h2>
+    <div className="flex min-h-full flex-col gap-[18px] p-4 sm:p-6 lg:p-4">
+      <RbacHeader />
       <div className="flex gap-4">
         <>
           {isLoading ? (

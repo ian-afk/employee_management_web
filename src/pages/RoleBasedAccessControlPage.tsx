@@ -1,11 +1,7 @@
 import RoleBasedAccessControl from "../features/rbac/RoleBasedAccessControl";
 
 function RoleBasedAccessControlPage() {
-  return (
-    <div>
-      <RoleBasedAccessControl />
-    </div>
-  );
+  return <RoleBasedAccessControl />;
 }
 
 export default RoleBasedAccessControlPage;
