@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { GroupedModule } from "../../../types/rbac-type";
+import PermissionMatrixTabHeader from "./PermissionMatrixTabHeader";
 
 const ACTIONS = ["view", "create", "edit", "delete"] as const;
 
@@ -123,15 +124,7 @@ function PermissionMatrixTab({
   };
   return (
     <div className="min-w-0 space-y-3 px-[5px]">
-      <div>
-        <span className="block break-words text-[13px] font-bold leading-5 text-[#172033]">
-          {roleName}
-        </span>
-        <p className="mt-1 text-xs leading-relaxed text-[#647089]">
-          Select allowed actions, then choose whose records this role can
-          access.
-        </p>
-      </div>
+      <PermissionMatrixTabHeader roleName={roleName} />
       <div
         className="overflow-x-auto rounded-[10px] border border-[#dfe6f0] bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9bb7ff] [scrollbar-width:thin]"
         role="region"

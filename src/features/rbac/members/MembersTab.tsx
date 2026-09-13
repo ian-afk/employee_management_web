@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { getUserByRole } from "../../../services/userService";
+import MembersTabSkeleton from "./MembersTabSkeleton";
 
 type MembersTabProps = {
   roleId: string;
@@ -16,19 +17,7 @@ function MembersTab({ roleId }: MembersTabProps) {
       getUserByRole(`user/role/${roleId}`, { roleId, signal }),
   });
 
-  if (isLoading)
-    return (
-      <div className="px-[5px] py-3 text-xs leading-5 text-[#647089]">
-        Loading...
-      </div>
-    );
-  if (isError)
-    return (
-      <div className="px-[5px] py-3 text-xs leading-5 text-[#c64242]">
-        something went wrong
-      </div>
-    );
-  console.log(users);
+  const members = users?.user ?? [];
 
   return (
     <div className="min-w-0 space-y-3 px-[5px]">
@@ -38,9 +27,15 @@ function MembersTab({ roleId }: MembersTabProps) {
         </span>
       </div>
       <div className="grid gap-2">
-        {users.user.length > 0 ? (
+        {isLoading ? (
+          <MembersTabSkeleton />
+        ) : isError && !users ? (
+          <div role="alert" className="py-3 text-xs leading-5 text-[#c64242]">
+            something went wrong
+          </div>
+        ) : members.length > 0 ? (
           <>
-            {users.user.map((user) => (
+            {members.map((user) => (
               <div
                 key={user.emp_id}
                 className="flex min-h-[62px] min-w-0 items-center gap-[10px] rounded-[10px] border border-[#dfe6f0] bg-white px-3 py-[11px] transition-colors hover:bg-[#f8fafd]"

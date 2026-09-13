@@ -6,6 +6,7 @@ import type { Role } from "../../types/rbac-type";
 import RbacRoleMenus from "./RbacRoleMenus";
 import RbacHeader from "./RbacHeader";
 import RbacRoleMenusSkeleton from "./RbacRoleMenusSkeleton";
+import RbacRoleDetailsSkeleton from "./RbacRoleDetailsSkeleton";
 
 function RoleBasedAccessControl() {
   const [selectRole, setSelectRole] = useState<Role | null>();
@@ -52,20 +53,22 @@ function RoleBasedAccessControl() {
               </div>
             ) : (
               roleResults.map((role) => (
-                  <RbacRoleMenus
-                    key={role.roleId}
-                    onSelectRole={setSelectRole}
-                    role={role}
-                    isSelected={selectedRole?.roleId === role.roleId}
-                  />
+                <RbacRoleMenus
+                  key={role.roleId}
+                  onSelectRole={setSelectRole}
+                  role={role}
+                  isSelected={selectedRole?.roleId === role.roleId}
+                />
               ))
             )}
           </div>
         </div>
         <div className="min-w-0 flex-1">
           {selectedRole ? (
-            <RbacRoleDetails key={selectedRole.roleId} role={selectedRole} />
-          ) : !isLoading && !isError ? (
+            <RbacRoleDetails role={selectedRole} />
+          ) : isLoading ? (
+            <RbacRoleDetailsSkeleton />
+          ) : !isError ? (
             <div>No selected Role </div>
           ) : null}
         </div>
