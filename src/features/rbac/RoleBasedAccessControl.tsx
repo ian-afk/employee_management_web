@@ -5,6 +5,8 @@ import RbacRoleDetails from "./RbacRoleDetails";
 import type { Role } from "../../types/rbac-type";
 import RbacRoleMenus from "./RbacRoleMenus";
 import RbacHeader from "./RbacHeader";
+import RbacRoleMenusSkeleton from "./RbacRoleMenusSkeleton";
+import RbacRoleDetailsSkeleton from "./RbacRoleDetailsSkeleton";
 
 function RoleBasedAccessControl() {
   const [selectRole, setSelectRole] = useState<Role | null>();
@@ -19,47 +21,56 @@ function RoleBasedAccessControl() {
     refetchOnWindowFocus: false,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div> Something went wrong</div>;
-
+  const roleResults = role?.results ?? [];
   const selectedRole =
     selectRole ??
-    role.results.find((role) => role.roleCode === "SUPER_ADMIN") ??
-    role?.results[0] ??
+    roleResults.find((role) => role.roleCode === "SUPER_ADMIN") ??
+    roleResults[0] ??
     null;
 
-  const roleResults = role.results;
   return (
     <div className="flex min-h-full flex-col gap-[18px] p-4 sm:p-6 lg:p-4">
       <RbacHeader />
-      <div className="flex gap-4">
-        <>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <div className="flex flex-col gap-4 w-96 border-2 border-solid border-gray-400 rounded-md">
-              <div className="px-4 py-2 border-b-2 border-gray-400">
-                <span>Roles</span>
-                <p>Core templates + custom roles</p>
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <div className="flex w-[270px] max-w-full shrink-0 flex-col self-start rounded-[14px] border border-[#dfe6f0] bg-white shadow-[0_8px_28px_rgba(23,32,51,0.04)]">
+          <header className="cursor-default rounded-t-[14px] border-b border-[#14213d] bg-[#14213d] px-[17px] py-[10px]">
+            <h2 className="text-[10px] font-extrabold uppercase leading-4 tracking-[0.11em] text-white">
+              Roles
+            </h2>
+            <p className="mt-[3px] text-[10px] leading-4 text-[#c7d2e5]">
+              Core templates + custom roles
+            </p>
+          </header>
+          <div className="space-y-1 p-[7px]">
+            {isLoading ? (
+              <RbacRoleMenusSkeleton />
+            ) : isError && !role ? (
+              <div
+                role="alert"
+                className="px-[10px] py-3 text-xs leading-5 text-[#c64242]"
+              >
+                Something went wrong
               </div>
-              <div className="px-4 py-1 space-y-2 pb-4">
-                {roleResults.map((role) => (
-                  <RbacRoleMenus
-                    key={role.roleId}
-                    onSelectRole={setSelectRole}
-                    role={role}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </>
-        <div>
+            ) : (
+              roleResults.map((role) => (
+                <RbacRoleMenus
+                  key={role.roleId}
+                  onSelectRole={setSelectRole}
+                  role={role}
+                  isSelected={selectedRole?.roleId === role.roleId}
+                />
+              ))
+            )}
+          </div>
+        </div>
+        <div className="min-w-0 flex-1">
           {selectedRole ? (
-            <RbacRoleDetails key={selectedRole.roleId} role={selectedRole} />
-          ) : (
+            <RbacRoleDetails role={selectedRole} />
+          ) : isLoading ? (
+            <RbacRoleDetailsSkeleton />
+          ) : !isError ? (
             <div>No selected Role </div>
-          )}
+          ) : null}
         </div>
         <div></div>
       </div>

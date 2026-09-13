@@ -15,17 +15,28 @@ const menuTab: MenuTabType[] = [
 ];
 
 type RbacRoleMenuProps = {
-  onSetTab: React.Dispatch<SetStateAction<string>>;
-};
+  selectedTab: string;
+} & (
+  | { disabled: true; onSetTab?: never }
+  | { disabled?: false; onSetTab: React.Dispatch<SetStateAction<string>> }
+);
 
-function RbacRoleDetailsMenu({ onSetTab }: RbacRoleMenuProps) {
+function RbacRoleDetailsMenu({ onSetTab, selectedTab, disabled = false }: RbacRoleMenuProps) {
   return (
-    <div className="flex gap-4">
+    <div className="-mx-3 flex gap-[18px] overflow-x-auto border-b border-[#dfe6f0] px-[17px] [scrollbar-width:thin]">
       {menuTab.map((tab) => (
         <button
           key={tab.tab}
-          onClick={() => onSetTab(tab.tab)}
-          className="border-2 border-solid border-red-500 px-4 py-2"
+          type="button"
+          onClick={() => onSetTab?.(tab.tab)}
+          disabled={disabled}
+          className={[
+            "min-h-[45px] shrink-0 whitespace-nowrap border-b-2 bg-transparent px-1 text-xs font-bold transition-colors disabled:cursor-wait",
+            "focus:outline-none focus-visible:shadow-[inset_0_0_0_2px_#9bb7ff]",
+            selectedTab === tab.tab
+              ? "border-[#2f66e8] text-[#2f66e8]"
+              : "border-transparent text-[#647089] enabled:hover:border-[#c7d7ff] enabled:hover:text-[#2f66e8]",
+          ].join(" ")}
         >
           {tab.label}
         </button>

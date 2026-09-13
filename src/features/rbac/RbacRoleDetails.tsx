@@ -19,18 +19,26 @@ function RbacRoleDetails({ role }: RbacRoleDetailsProps) {
     staleTime: Number(`${import.meta.env.VITE_QUERY_STALE_TIME}`),
     refetchOnWindowFocus: false,
   });
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>error</div>;
 
   const roleId = role.roleId;
 
   return (
-    <div className="border-2 border-solid border-gray-400 rounded-lg px-3 py-5">
-      <div>
-        <h3>{role.roleName}</h3>
-        <p className="">{role.roleDescription}</p>
-      </div>
-      <RbacRoleDetailsTab permission={permission} role={role} roleId={roleId} />
+    <div className="min-w-0 rounded-[14px] border border-[#dfe6f0] bg-white px-3 py-5 shadow-[0_8px_28px_rgba(23,32,51,0.04)]">
+      <header className="-mx-3 -mt-5 rounded-t-[14px] border-b border-[#edf1f6] p-[17px]">
+        <h3 className="break-words text-lg font-bold leading-6 tracking-[-0.01em] text-[#172033]">
+          {role.roleName}
+        </h3>
+        <p className="mt-[5px] max-w-[42rem] break-words text-xs leading-relaxed text-[#647089]">
+          {role.roleDescription}
+        </p>
+      </header>
+      <RbacRoleDetailsTab
+        permission={permission}
+        isLoading={isLoading}
+        isError={isError}
+        role={role}
+        roleId={roleId}
+      />
     </div>
   );
 }
