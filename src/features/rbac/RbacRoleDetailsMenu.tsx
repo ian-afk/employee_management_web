@@ -1,4 +1,4 @@
-import { type SetStateAction } from "react";
+import { memo, type SetStateAction } from "react";
 type RbacTab = "overview" | "matrix" | "members";
 type MenuTabType = {
   label: "Overview" | "Permission matrix" | "Members";
@@ -34,4 +34,4 @@ function RbacRoleDetailsMenu({ onSetTab }: RbacRoleMenuProps) {
   );
 }
 
-export default RbacRoleDetailsMenu;
+export default memo(RbacRoleDetailsMenu);
