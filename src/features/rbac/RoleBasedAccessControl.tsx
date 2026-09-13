@@ -32,7 +32,7 @@ function RoleBasedAccessControl() {
   return (
     <div className="flex min-h-full flex-col gap-[18px] p-4 sm:p-6 lg:p-4">
       <RbacHeader />
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row">
         <>
           {isLoading ? (
             <div>Loading...</div>
@@ -55,7 +55,7 @@ function RoleBasedAccessControl() {
             </div>
           )}
         </>
-        <div>
+        <div className="min-w-0 flex-1">
           {selectedRole ? (
             <RbacRoleDetails key={selectedRole.roleId} role={selectedRole} />
           ) : (
