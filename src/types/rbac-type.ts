@@ -9,7 +9,7 @@ export type Role = {
   rpid: string;
   roleName: string;
   roleCode: string;
-  description: string;
+  roleDescription?: string;
   resource: string;
   action: string;
   userCount?: string;
