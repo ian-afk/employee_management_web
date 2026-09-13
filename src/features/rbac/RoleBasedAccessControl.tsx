@@ -37,14 +37,20 @@ function RoleBasedAccessControl() {
           {isLoading ? (
             <div>Loading...</div>
           ) : (
-            <div className="flex flex-col gap-4">
-              {roleResults.map((role) => (
-                <RbacRoleMenus
-                  key={role.roleId}
-                  onSelectRole={setSelectRole}
-                  role={role}
-                />
-              ))}
+            <div className="flex flex-col gap-4 w-96 border-2 border-solid border-gray-400 rounded-md">
+              <div className="px-4 py-2 border-b-2 border-gray-400">
+                <span>Roles</span>
+                <p>Core templates + custom roles</p>
+              </div>
+              <div className="px-4 py-1 space-y-2 pb-4">
+                {roleResults.map((role) => (
+                  <RbacRoleMenus
+                    key={role.roleId}
+                    onSelectRole={setSelectRole}
+                    role={role}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </>

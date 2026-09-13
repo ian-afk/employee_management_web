@@ -1,13 +1,13 @@
 function OverviewTabDetails() {
   return (
-    <div>
-      <div>
-        <div>
+    <div className="space-y-4">
+      <div className="flex gap-4">
+        <div className="p-4 border-2 border-solid border-green-600">
           <span>Permissions selected</span>
           <span>COUNT PERMISSIONS</span>
           <p>Number of actions selected in the saved permission setup.</p>
         </div>
-        <div>
+        <div className="p-4 border-2 border-solid border-green-600">
           <span>Areas Covered</span>
           <span>COUNT MODULES</span>
           <p>
@@ -17,7 +17,7 @@ function OverviewTabDetails() {
         </div>
       </div>
       <div>
-        <div>
+        <div className="p-4 border-2 border-solid border-blue-600">
           <span>How multiple roles combine</span>
           <p>
             Roles add access together. Removing permission from one role does
