@@ -17,8 +17,8 @@ function RbacRoleDetailsTab({
 }: RbacRoleDetailsTabProps) {
   const [tab, setTab] = useState<string>("overview");
   return (
-    <div className="space-y-5 mt-4">
-      <RbacRoleDetailsMenu onSetTab={setTab} />
+    <div className="space-y-5">
+      <RbacRoleDetailsMenu onSetTab={setTab} selectedTab={tab} />
       <div>
         {tab === "overview" && <OverviewTabDetails />}
         {tab === "matrix" && (
