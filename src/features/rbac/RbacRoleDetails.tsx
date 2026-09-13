@@ -19,8 +19,6 @@ function RbacRoleDetails({ role }: RbacRoleDetailsProps) {
     staleTime: Number(`${import.meta.env.VITE_QUERY_STALE_TIME}`),
     refetchOnWindowFocus: false,
   });
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>error</div>;
 
   const roleId = role.roleId;
 
@@ -34,7 +32,13 @@ function RbacRoleDetails({ role }: RbacRoleDetailsProps) {
           {role.roleDescription}
         </p>
       </header>
-      <RbacRoleDetailsTab permission={permission} role={role} roleId={roleId} />
+      <RbacRoleDetailsTab
+        permission={permission}
+        isLoading={isLoading}
+        isError={isError}
+        role={role}
+        roleId={roleId}
+      />
     </div>
   );
 }
