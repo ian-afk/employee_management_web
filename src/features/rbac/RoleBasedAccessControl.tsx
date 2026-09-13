@@ -37,17 +37,18 @@ function RoleBasedAccessControl() {
           {isLoading ? (
             <div>Loading...</div>
           ) : (
-            <div className="flex flex-col gap-4 w-96 border-2 border-solid border-gray-400 rounded-md">
-              <div className="px-4 py-2 border-b-2 border-gray-400">
-                <span>Roles</span>
-                <p>Core templates + custom roles</p>
+            <div className="flex w-[270px] max-w-full shrink-0 flex-col self-start rounded-[14px] border border-[#dfe6f0] bg-white shadow-[0_8px_28px_rgba(23,32,51,0.04)]">
+              <div className="min-h-[65px] border-b border-[#edf1f6] px-[17px] py-[14px]">
+                <span className="text-[13px] font-bold text-[#172033]">Roles</span>
+                <p className="mt-1 text-[10px] leading-4 text-[#647089]">Core templates + custom roles</p>
               </div>
-              <div className="px-4 py-1 space-y-2 pb-4">
+              <div className="space-y-1 p-[7px]">
                 {roleResults.map((role) => (
                   <RbacRoleMenus
                     key={role.roleId}
                     onSelectRole={setSelectRole}
                     role={role}
+                    isSelected={selectedRole?.roleId === role.roleId}
                   />
                 ))}
               </div>
