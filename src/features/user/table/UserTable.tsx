@@ -11,7 +11,7 @@ import { Navigate } from "react-router-dom";
 import UserTableRow from "./UserTableRow";
 
 type UserTableProps = {
-  onSetUserId: React.Dispatch<SetStateAction<string | null>>;
+  onSetUserId: React.Dispatch<SetStateAction<string>>;
 };
 
 const tableHead = [
