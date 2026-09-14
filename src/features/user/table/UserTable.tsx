@@ -9,6 +9,8 @@ import { getAllUsers } from "../../../services/userService";
 import { isUnAuthorizedError } from "../../../services/authHelper";
 import { Navigate } from "react-router-dom";
 import UserTableRow from "./UserTableRow";
+import TableEmpty from "../../../components/table/TableEmpty";
+import TableSkeletonLoader from "../../../components/table/TableSkeletonLoader";
 
 type UserTableProps = {
   onSetUserId: React.Dispatch<SetStateAction<string>>;
@@ -116,11 +118,14 @@ function UserTable({ onSetUserId }: UserTableProps) {
             <TableHead tableHead={tableHead} />
             <tbody>
               {loadSkeleton ? (
-                <div>Loading...</div>
+                <TableSkeletonLoader tableRowLength={tableHead.length} />
               ) : userResults ? (
                 <UserTableRow users={users.results} onSetUserId={onSetUserId} />
               ) : (
-                <div>No users found</div>
+                <TableEmpty
+                  noDataFound="No users found"
+                  noDataFoundMessage="There are no user records to display"
+                />
               )}
             </tbody>
           </table>
