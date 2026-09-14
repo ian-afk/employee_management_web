@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import TaskPage from "./pages/TaskPage";
 import AttendancePage from "./pages/AttendancePage";
 import RoleBasedAccessControlPage from "./pages/RoleBasedAccessControlPage";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Route path="employees" element={<EmployeePage />} />
             <Route path="tasks" element={<TaskPage />} />
             <Route path="attendance" element={<AttendancePage />} />
-            <Route path="administration/users" element={<div>User here</div>} />
+            <Route path="administration/users" element={<UserPage />} />
             <Route
               path="administration/rbac"
               element={<RoleBasedAccessControlPage />}
