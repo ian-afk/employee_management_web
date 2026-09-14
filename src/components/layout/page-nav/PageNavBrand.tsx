@@ -7,7 +7,8 @@ function PageNavBrand({ isExpanded }: PageNavBrandProps) {
     <div>
       <div
         className={[
-          "flex items-center overflow-hidden border-b border-[#edf1f6] pb-5 pt-[3px]",
+          // "flex items-center overflow-hidden border-b border-[#edf1f6] pb-5 pt-[3px]",
+          "flex items-center overflow-hidden pb-5 pt-[3px]",
           "transition-[padding,gap] duration-300 ease-in-out",
           isExpanded ? "gap-[11px] px-[7px]" : "gap-0 pb-5 pl-[15px] pr-0",
         ].join(" ")}

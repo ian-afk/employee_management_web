@@ -19,10 +19,14 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="employee" element={<EmployeePage />} />
-            <Route path="task" element={<TaskPage />} />
+            <Route path="employees" element={<EmployeePage />} />
+            <Route path="tasks" element={<TaskPage />} />
             <Route path="attendance" element={<AttendancePage />} />
-            <Route path="rbac" element={<RoleBasedAccessControlPage />} />
+            <Route path="administration/users" element={<div>User here</div>} />
+            <Route
+              path="administration/rbac"
+              element={<RoleBasedAccessControlPage />}
+            />
           </Route>
           <Route path="*" element={<PageNoutFound />} />
         </Routes>
