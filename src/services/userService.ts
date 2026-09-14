@@ -1,5 +1,5 @@
 import type { UserByRoleResponse } from "../types/rbac-type";
-import type { TeamLeadUserResponse } from "../types/user-type";
+import type { TeamLeadUserResponse, UserListReponse } from "../types/user-type";
 import { apiClient } from "./apiClient";
 
 export const getTeamLead = async (query: {
@@ -21,6 +21,21 @@ export const getUserByRole = async (
   },
 ): Promise<UserByRoleResponse> => {
   const res: UserByRoleResponse = await apiClient.get(`${url}`, {
+    signal: query.signal,
+  });
+  return res;
+};
+
+export const getAllUsers = async (
+  url: string,
+  query: {
+    page: number;
+    limit: number;
+    signal?: AbortSignal;
+  },
+): Promise<UserListReponse> => {
+  const res: UserListReponse = await apiClient.get(url, {
+    params: { page: query.page, limit: query.limit },
     signal: query.signal,
   });
   return res;
