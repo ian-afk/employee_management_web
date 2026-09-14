@@ -1,6 +1,6 @@
 import { useState } from "react";
 import UserHeader from "./UserHeader";
-import UserTable from "./UserTable";
+import UserTable from "./table/UserTable";
 
 function User() {
   const [userId, setUserId] = useState<string | null>("");
