@@ -37,7 +37,7 @@ function UserTableRow({ users, onSetUserId }: UserTableRowProps) {
               <span className="block truncate text-[#172033]">{userrole}</span>
             </td>
             <td className="px-2 py-[18px]">
-              {item.department?.departmentName ?? "-"}
+              {item?.department?.departmentName ?? "-"}
             </td>
             <td className="px-2 py-[18px]">
               <span

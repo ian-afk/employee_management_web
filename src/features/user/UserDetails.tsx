@@ -3,6 +3,11 @@ import { getUserById } from "../../services/userService";
 import { Navigate } from "react-router-dom";
 import { isUnAuthorizedError } from "../../services/authHelper";
 
+import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
+
+import DrawerInfoHeader from "../../components/drawer/DrawerInfoHeader";
+import DetailItem from "../../components/drawer/DetailItem";
+
 type UserDetailsProps = {
   userId: string;
 };
@@ -21,57 +26,74 @@ function UserDetails({ userId }: UserDetailsProps) {
 
   const user = data?.user;
   const employeeDetail = user?.employee;
+
   return (
     <>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div>
+        <div className="px-6 py-8">
+          <DrawerInfoHeader
+            name={`${employeeDetail?.firstName} ${employeeDetail?.lastName}`}
+            jobTitle={`${employeeDetail?.job_title}`}
+            department={`${employeeDetail?.department.departmentName}`}
+            status={`${user?.status}`}
+            icon={PersonOutlineIcon}
+          />
           <section className="mt-8">
             <h3 className="mb-6 text-sm font-bold uppercase tracking-[0.08em] text-[#172033]">
               Identity Summary
             </h3>
-            <div>
-              <label htmlFor="">Employee ID</label>
-              <p>{employeeDetail?.empId}</p>
-            </div>
-            <div>
-              <label htmlFor="">Full name</label>
-              <p>
-                {employeeDetail?.firstName} {employeeDetail?.lastName}
-              </p>
-            </div>
-            <div>
-              <label htmlFor="">Job Title</label>
-
-              <p>{employeeDetail?.job_title}</p>
-            </div>
+            <DetailItem
+              item={[
+                {
+                  label: "Employee ID",
+                  value: employeeDetail?.empId,
+                },
+                {
+                  label: "Full name",
+                  value: `${employeeDetail?.firstName} ${employeeDetail?.lastName}`,
+                },
+                {
+                  label: "Job Title",
+                  value: `${employeeDetail?.job_title}`,
+                },
+              ]}
+            />
           </section>
           <section className="mt-8">
             <h3 className="mb-6 text-sm font-bold uppercase tracking-[0.08em] text-[#172033]">
               Account
             </h3>
-            <div>
-              <label htmlFor="">Email</label>
-              <p>{user?.email}</p>
-            </div>
-            <div>
-              <label htmlFor="">Status</label>
-              <p>{user?.status}</p>
-            </div>
-            <div>
-              <label htmlFor="">Created Date</label>
-              <p>{user?.createdAt}</p>
-            </div>
+            <DetailItem
+              item={[
+                {
+                  label: "Email",
+                  value: user?.email,
+                },
+                {
+                  label: "Status",
+                  value: user?.status,
+                },
+                {
+                  label: "Created Date",
+                  value: user?.createdAt,
+                },
+              ]}
+            />
           </section>
           <section className="mt-8">
             <h3 className="mb-6 text-sm font-bold uppercase tracking-[0.08em] text-[#172033]">
               Access
             </h3>
-            <div>
-              <label htmlFor="">Assigned Role</label>
-              <p>{user?.userRoles.join(", ")}</p>
-            </div>
+            <DetailItem
+              item={[
+                {
+                  label: "Assigned Role",
+                  value: user?.userRoles.join(", "),
+                },
+              ]}
+            />
           </section>
         </div>
       )}
