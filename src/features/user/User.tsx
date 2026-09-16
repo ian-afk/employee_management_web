@@ -2,6 +2,7 @@ import { useState } from "react";
 import UserHeader from "./UserHeader";
 import UserTable from "./table/UserTable";
 import Drawer from "../../components/drawer/Drawer";
+import UserDetails from "./UserDetails";
 
 function User() {
   const [userId, setUserId] = useState<string>("");
@@ -15,7 +16,7 @@ function User() {
           drawerHeader="User Details"
           drawerInformation="User Information"
         >
-          <div>{userId}</div>
+          <UserDetails userId={userId} />
         </Drawer>
       )}
     </div>
