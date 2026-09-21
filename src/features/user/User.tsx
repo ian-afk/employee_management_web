@@ -7,7 +7,7 @@ import UserDetails from "./UserDetails";
 function User() {
   const [userId, setUserId] = useState<string>("");
   return (
-    <div>
+    <div className="flex flex-col gap-6 p-6 lg:p-4">
       <UserHeader />
       <UserTable onSetUserId={setUserId} />
       {userId && (

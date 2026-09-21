@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import AddIcon from "@mui/icons-material/Add";
+import UserForm from "./UserForm";
 
 function UserCreateDialog() {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,7 @@ function UserCreateDialog() {
           title="Add User"
           description="  Enter the user profile and user credentials."
         >
-          HELLO
+          <UserForm />
         </Modal>
       )}
     </div>
